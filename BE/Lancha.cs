@@ -10,9 +10,9 @@ namespace BE
     {
         public Lancha(bool direccion, int coordenadaX, int coordenadaY)
         {
-            Nombre = "Acorazado";
-            Slots = 3;
-            Id = 1;
+            Nombre = "Lancha";
+            Slots = 1;
+            Id = 3;
             CoordenadaX = coordenadaX;
             CoordenadaY = coordenadaY;
             Horizontal = direccion;

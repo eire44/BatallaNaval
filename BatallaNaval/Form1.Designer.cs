@@ -30,11 +30,14 @@
         {
             this.dgvJugador = new System.Windows.Forms.DataGridView();
             this.dgvEnemigo = new System.Windows.Forms.DataGridView();
-            this.btnAgregarBarco = new System.Windows.Forms.Button();
+            this.btnAgregarLancha = new System.Windows.Forms.Button();
             this.lblCoordeanadas = new System.Windows.Forms.Label();
             this.btnAtacar = new System.Windows.Forms.Button();
             this.lblTurno = new System.Windows.Forms.Label();
-            this.lblBarcoAAgregar = new System.Windows.Forms.Label();
+            this.chkHorizontal = new System.Windows.Forms.CheckBox();
+            this.btnDestructor = new System.Windows.Forms.Button();
+            this.btnPortaviones = new System.Windows.Forms.Button();
+            this.btnAcorazado = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvJugador)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEnemigo)).BeginInit();
             this.SuspendLayout();
@@ -46,7 +49,7 @@
             this.dgvJugador.Name = "dgvJugador";
             this.dgvJugador.RowHeadersWidth = 51;
             this.dgvJugador.RowTemplate.Height = 24;
-            this.dgvJugador.Size = new System.Drawing.Size(608, 394);
+            this.dgvJugador.Size = new System.Drawing.Size(608, 371);
             this.dgvJugador.TabIndex = 0;
             // 
             // dgvEnemigo
@@ -56,22 +59,23 @@
             this.dgvEnemigo.Name = "dgvEnemigo";
             this.dgvEnemigo.RowHeadersWidth = 51;
             this.dgvEnemigo.RowTemplate.Height = 24;
-            this.dgvEnemigo.Size = new System.Drawing.Size(702, 395);
+            this.dgvEnemigo.Size = new System.Drawing.Size(614, 371);
             this.dgvEnemigo.TabIndex = 1;
             // 
-            // btnAgregarBarco
+            // btnAgregarLancha
             // 
-            this.btnAgregarBarco.Location = new System.Drawing.Point(340, 491);
-            this.btnAgregarBarco.Name = "btnAgregarBarco";
-            this.btnAgregarBarco.Size = new System.Drawing.Size(159, 59);
-            this.btnAgregarBarco.TabIndex = 3;
-            this.btnAgregarBarco.Text = "Agregar Barco";
-            this.btnAgregarBarco.UseVisualStyleBackColor = true;
+            this.btnAgregarLancha.Location = new System.Drawing.Point(456, 466);
+            this.btnAgregarLancha.Name = "btnAgregarLancha";
+            this.btnAgregarLancha.Size = new System.Drawing.Size(137, 44);
+            this.btnAgregarLancha.TabIndex = 3;
+            this.btnAgregarLancha.Text = "Agregar Lancha";
+            this.btnAgregarLancha.UseVisualStyleBackColor = true;
+            this.btnAgregarLancha.Click += new System.EventHandler(this.btnAgregarLancha_Click);
             // 
             // lblCoordeanadas
             // 
             this.lblCoordeanadas.AutoSize = true;
-            this.lblCoordeanadas.Location = new System.Drawing.Point(568, 493);
+            this.lblCoordeanadas.Location = new System.Drawing.Point(618, 466);
             this.lblCoordeanadas.Name = "lblCoordeanadas";
             this.lblCoordeanadas.Size = new System.Drawing.Size(96, 16);
             this.lblCoordeanadas.TabIndex = 4;
@@ -79,7 +83,7 @@
             // 
             // btnAtacar
             // 
-            this.btnAtacar.Location = new System.Drawing.Point(760, 491);
+            this.btnAtacar.Location = new System.Drawing.Point(867, 473);
             this.btnAtacar.Name = "btnAtacar";
             this.btnAtacar.Size = new System.Drawing.Size(170, 59);
             this.btnAtacar.TabIndex = 5;
@@ -95,25 +99,59 @@
             this.lblTurno.TabIndex = 6;
             this.lblTurno.Text = "Turno: ";
             // 
-            // lblBarcoAAgregar
+            // chkHorizontal
             // 
-            this.lblBarcoAAgregar.AutoSize = true;
-            this.lblBarcoAAgregar.Location = new System.Drawing.Point(47, 506);
-            this.lblBarcoAAgregar.Name = "lblBarcoAAgregar";
-            this.lblBarcoAAgregar.Size = new System.Drawing.Size(62, 16);
-            this.lblBarcoAAgregar.TabIndex = 7;
-            this.lblBarcoAAgregar.Text = "Agregar: ";
+            this.chkHorizontal.AutoSize = true;
+            this.chkHorizontal.Location = new System.Drawing.Point(273, 531);
+            this.chkHorizontal.Name = "chkHorizontal";
+            this.chkHorizontal.Size = new System.Drawing.Size(89, 20);
+            this.chkHorizontal.TabIndex = 8;
+            this.chkHorizontal.Text = "Horizontal";
+            this.chkHorizontal.UseVisualStyleBackColor = true;
+            // 
+            // btnDestructor
+            // 
+            this.btnDestructor.Location = new System.Drawing.Point(313, 466);
+            this.btnDestructor.Name = "btnDestructor";
+            this.btnDestructor.Size = new System.Drawing.Size(137, 44);
+            this.btnDestructor.TabIndex = 9;
+            this.btnDestructor.Text = "Agregar Destructor";
+            this.btnDestructor.UseVisualStyleBackColor = true;
+            this.btnDestructor.Click += new System.EventHandler(this.btnDestructor_Click);
+            // 
+            // btnPortaviones
+            // 
+            this.btnPortaviones.Location = new System.Drawing.Point(27, 466);
+            this.btnPortaviones.Name = "btnPortaviones";
+            this.btnPortaviones.Size = new System.Drawing.Size(137, 44);
+            this.btnPortaviones.TabIndex = 10;
+            this.btnPortaviones.Text = "Agregar Portaviones";
+            this.btnPortaviones.UseVisualStyleBackColor = true;
+            this.btnPortaviones.Click += new System.EventHandler(this.btnPortaviones_Click);
+            // 
+            // btnAcorazado
+            // 
+            this.btnAcorazado.Location = new System.Drawing.Point(170, 466);
+            this.btnAcorazado.Name = "btnAcorazado";
+            this.btnAcorazado.Size = new System.Drawing.Size(137, 44);
+            this.btnAcorazado.TabIndex = 11;
+            this.btnAcorazado.Text = "Agregar Acorazado";
+            this.btnAcorazado.UseVisualStyleBackColor = true;
+            this.btnAcorazado.Click += new System.EventHandler(this.btnAcorazado_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1335, 571);
-            this.Controls.Add(this.lblBarcoAAgregar);
+            this.ClientSize = new System.Drawing.Size(1246, 571);
+            this.Controls.Add(this.btnAcorazado);
+            this.Controls.Add(this.btnPortaviones);
+            this.Controls.Add(this.btnDestructor);
+            this.Controls.Add(this.chkHorizontal);
             this.Controls.Add(this.lblTurno);
             this.Controls.Add(this.btnAtacar);
             this.Controls.Add(this.lblCoordeanadas);
-            this.Controls.Add(this.btnAgregarBarco);
+            this.Controls.Add(this.btnAgregarLancha);
             this.Controls.Add(this.dgvEnemigo);
             this.Controls.Add(this.dgvJugador);
             this.Name = "Form1";
@@ -130,11 +168,14 @@
 
         private System.Windows.Forms.DataGridView dgvJugador;
         private System.Windows.Forms.DataGridView dgvEnemigo;
-        private System.Windows.Forms.Button btnAgregarBarco;
+        private System.Windows.Forms.Button btnAgregarLancha;
         private System.Windows.Forms.Label lblCoordeanadas;
         private System.Windows.Forms.Button btnAtacar;
         private System.Windows.Forms.Label lblTurno;
-        private System.Windows.Forms.Label lblBarcoAAgregar;
+        private System.Windows.Forms.CheckBox chkHorizontal;
+        private System.Windows.Forms.Button btnDestructor;
+        private System.Windows.Forms.Button btnPortaviones;
+        private System.Windows.Forms.Button btnAcorazado;
     }
 }
 

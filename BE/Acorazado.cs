@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    internal class Acorazado : BEBarcos
+    public class Acorazado : BEBarcos
     {
 
         public Acorazado(bool direccion, int coordenadaX, int coordenadaY)
