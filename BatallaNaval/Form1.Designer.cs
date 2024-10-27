@@ -61,6 +61,7 @@
             this.dgvEnemigo.RowTemplate.Height = 24;
             this.dgvEnemigo.Size = new System.Drawing.Size(614, 371);
             this.dgvEnemigo.TabIndex = 1;
+            this.dgvEnemigo.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEnemigo_CellClick);
             // 
             // btnAgregarLancha
             // 

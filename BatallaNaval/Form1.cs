@@ -113,7 +113,6 @@ namespace BatallaNaval
             int y = int.Parse(dgvJugador.SelectedCells[0].ColumnIndex.ToString());
             int x = int.Parse(dgvJugador.SelectedCells[0].RowIndex.ToString());
             bool horizontal = chkHorizontal.Checked;
-            dgvJugador.DefaultCellStyle.SelectionBackColor = Color.Gray;
 
             Destructor destructor = new Destructor(horizontal, x, y);
 
@@ -177,7 +176,6 @@ namespace BatallaNaval
             int x = int.Parse(dgvJugador.SelectedCells[0].RowIndex.ToString());
             bool horizontal = chkHorizontal.Checked;
 
-            dgvJugador.DefaultCellStyle.SelectionBackColor = Color.Gray;
 
             Acorazado acorazado = new Acorazado(horizontal, x, y);
 
@@ -238,7 +236,6 @@ namespace BatallaNaval
             int y = int.Parse(dgvJugador.SelectedCells[0].ColumnIndex.ToString());
             int x = int.Parse(dgvJugador.SelectedCells[0].RowIndex.ToString());
             bool horizontal = chkHorizontal.Checked;
-            dgvJugador.DefaultCellStyle.SelectionBackColor = Color.Gray;
 
 
             Portaviones portaviones = new Portaviones(horizontal, x, y);
@@ -295,6 +292,14 @@ namespace BatallaNaval
             }
 
             
+        }
+
+        private void dgvEnemigo_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int y = int.Parse(dgvEnemigo.SelectedCells[0].ColumnIndex.ToString());
+            int x = int.Parse(dgvEnemigo.SelectedCells[0].RowIndex.ToString());
+            lblCoordeanadas.Text = "Coordenadas: " + dgvEnemigo.Columns[y].Name + ", " + (x + 1).ToString();
+
         }
     }
 }
