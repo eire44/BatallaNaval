@@ -17,6 +17,7 @@ namespace BE
             CoordenadaX = coordenadaX;
             CoordenadaY = coordenadaY;
             Horizontal = direccion;
+            Vidas = Slots;
         }
     }
 }

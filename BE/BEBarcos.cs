@@ -19,5 +19,7 @@ namespace BE
         public int CoordenadaX { get; set; }
 
         public int CoordenadaY { get; set; }
+
+        public int Vidas { get; set; }
     }
 }

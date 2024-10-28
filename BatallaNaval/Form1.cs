@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,7 +19,6 @@ namespace BatallaNaval
         {
             InitializeComponent();
         }
-
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -300,6 +300,16 @@ namespace BatallaNaval
             int x = int.Parse(dgvEnemigo.SelectedCells[0].RowIndex.ToString());
             lblCoordeanadas.Text = "Coordenadas: " + dgvEnemigo.Columns[y].Name + ", " + (x + 1).ToString();
 
+        }
+
+        BLMetodos bl = new BLMetodos();
+
+        private void btnConectar_Click(object sender, EventArgs e)
+        {
+            string ip = txtIP.Text;
+            int puerto = int.Parse(txtPuerto.Text);
+
+            bl.crearSocket(ip, puerto);
         }
     }
 }
