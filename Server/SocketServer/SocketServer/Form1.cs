@@ -4,9 +4,11 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Sockets;
 
 namespace SocketServer
 {
@@ -16,10 +18,25 @@ namespace SocketServer
         {
             InitializeComponent();
         }
+        ServidorConexion mConexion = new ServidorConexion();
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            cmbIPs.Items.AddRange(mConexion.ObtenerDireccionesLocales());
+        }
 
+        private void btnEscuchar_Click(object sender, EventArgs e)
+        {
+            int puerto;
+            if (int.TryParse(txtPuerto.Text, out puerto))
+            {
+                mConexion.PuertoEscucha = puerto;
+                mConexion.EscucharPuerto();
+            }
+            else
+            {
+                MessageBox.Show("El puerto debe conformarse por número", "Error");
+            }
         }
     }
 }

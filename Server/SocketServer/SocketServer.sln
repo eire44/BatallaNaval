@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sockets", "Sockets\Sockets.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{0CEA57BB-606D-46F8-8EF3-56EA06A7399A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BE", "BE\BE.csproj", "{25EEE04B-E726-42BC-A2DF-8DE51CC8A265}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL", "BL\BL.csproj", "{53176D16-A27A-41EC-9AD0-DCC46D3F7D0A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{0CEA57BB-606D-46F8-8EF3-56EA06A7399A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CEA57BB-606D-46F8-8EF3-56EA06A7399A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CEA57BB-606D-46F8-8EF3-56EA06A7399A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25EEE04B-E726-42BC-A2DF-8DE51CC8A265}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25EEE04B-E726-42BC-A2DF-8DE51CC8A265}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25EEE04B-E726-42BC-A2DF-8DE51CC8A265}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25EEE04B-E726-42BC-A2DF-8DE51CC8A265}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53176D16-A27A-41EC-9AD0-DCC46D3F7D0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53176D16-A27A-41EC-9AD0-DCC46D3F7D0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53176D16-A27A-41EC-9AD0-DCC46D3F7D0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53176D16-A27A-41EC-9AD0-DCC46D3F7D0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
