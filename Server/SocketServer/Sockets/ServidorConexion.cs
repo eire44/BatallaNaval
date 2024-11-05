@@ -92,7 +92,6 @@ namespace Sockets
                             if (SeRecibieronDatos != null)
                                 SeRecibieronDatos.Invoke(mDatosRecibidos);
                         }
-
                     }
 
                     LiberarCliente();

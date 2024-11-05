@@ -11,8 +11,8 @@ namespace Socket
 {
     public class SocketCliente
     {
-        private string IPRemota;
-        private string PuertoRemoto;
+        public string IPRemota;
+        public string PuertoRemoto;
         private static TcpClient TcpClient;
         private static NetworkStream NetworkStream;
         private Thread thread;
@@ -25,15 +25,17 @@ namespace Socket
 
         public delegate void DesconectadoEventHandler();
 
-        public void Conectar()
+        public bool Conectar()
         {
             TcpClient = new TcpClient();
             TcpClient.Connect(IPRemota, int.Parse(PuertoRemoto));
             NetworkStream = TcpClient.GetStream();
             IPRemota = TcpClient.Client.RemoteEndPoint.ToString();
 
-            thread = new System.Threading.Thread(EsperarDatos);
+            thread = new Thread(EsperarDatos);
             thread.Start();
+            
+            return TcpClient.Connected;
         }
 
         public void EsperarDatos()

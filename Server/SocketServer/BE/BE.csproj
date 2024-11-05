@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Acorazado.cs" />
     <Compile Include="BEBarcos.cs" />
+    <Compile Include="Datos.cs" />
     <Compile Include="Destructor.cs" />
     <Compile Include="Flota.cs" />
     <Compile Include="Lancha.cs" />

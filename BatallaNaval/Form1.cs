@@ -8,7 +8,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BL;
+using Socket;
 
 namespace BatallaNaval
 {
@@ -103,7 +103,6 @@ namespace BatallaNaval
                 MessageBox.Show("No se puede colocar el barco.");
             }
 
-            //Lancha lancha = new Lancha(horizontal, x, y);
 
             btnAgregarLancha.Enabled = false;
         }
@@ -114,7 +113,6 @@ namespace BatallaNaval
             x = int.Parse(dgvJugador.SelectedCells[0].RowIndex.ToString());
             bool horizontal = chkHorizontal.Checked;
 
-            //Destructor destructor = new Destructor(horizontal, x, y);
 
             Comprobacion(2);
             btnDestructor.Enabled = false;
@@ -149,14 +147,14 @@ namespace BatallaNaval
 
         }
 
-        BLMetodos bl = new BLMetodos();
-
+        SocketCliente socket = new SocketCliente();
         private void btnConectar_Click(object sender, EventArgs e)
         {
-            string ip = txtIP.Text;
-            int puerto = int.Parse(txtPuerto.Text);
+            socket.PuertoRemoto = txtPuerto.Text;
+            socket.IPRemota = txtIP.Text;
 
-            bl.crearSocket(ip, puerto);
+            MessageBox.Show(socket.Conectar().ToString());
+            btnConectar.Enabled = false;
         }
 
         void Comprobacion(int indice)
