@@ -8,13 +8,13 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BE;
 using BL;
 
 namespace BatallaNaval
 {
     public partial class Form1 : Form
     {
+        int x, y;
         public Form1()
         {
             InitializeComponent();
@@ -78,7 +78,7 @@ namespace BatallaNaval
             dgvEnemigo.DefaultCellStyle.BackColor = Color.LightBlue;
             dgvEnemigo.EditMode = DataGridViewEditMode.EditProgrammatically;
 
-            
+
             dgvEnemigo.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dgvEnemigo.MultiSelect = false;
 
@@ -89,8 +89,8 @@ namespace BatallaNaval
 
         private void btnAgregarLancha_Click(object sender, EventArgs e)
         {
-            int y = int.Parse(dgvJugador.SelectedCells[0].ColumnIndex.ToString());
-            int x = int.Parse(dgvJugador.SelectedCells[0].RowIndex.ToString());
+            y = int.Parse(dgvJugador.SelectedCells[0].ColumnIndex.ToString());
+            x = int.Parse(dgvJugador.SelectedCells[0].RowIndex.ToString());
             bool horizontal = chkHorizontal.Checked;
 
 
@@ -103,201 +103,48 @@ namespace BatallaNaval
                 MessageBox.Show("No se puede colocar el barco.");
             }
 
-            Lancha lancha = new Lancha(horizontal, x, y);
+            //Lancha lancha = new Lancha(horizontal, x, y);
 
             btnAgregarLancha.Enabled = false;
         }
 
         private void btnDestructor_Click(object sender, EventArgs e)
         {
-            int y = int.Parse(dgvJugador.SelectedCells[0].ColumnIndex.ToString());
-            int x = int.Parse(dgvJugador.SelectedCells[0].RowIndex.ToString());
+            y = int.Parse(dgvJugador.SelectedCells[0].ColumnIndex.ToString());
+            x = int.Parse(dgvJugador.SelectedCells[0].RowIndex.ToString());
             bool horizontal = chkHorizontal.Checked;
 
-            Destructor destructor = new Destructor(horizontal, x, y);
+            //Destructor destructor = new Destructor(horizontal, x, y);
 
-
-            bool valido = true;
-
-            try
-            {
-                for (int i = 0; i < destructor.Slots; i++)
-                {
-                    if (!destructor.Horizontal && valido)
-                    {
-                        if (dgvJugador.Rows[x + i].Cells[y].Style.BackColor == Color.Gray)
-                        {
-                            valido = false;
-                        }
-                    }
-                    else if (valido)
-                    {
-                        if (dgvJugador.Rows[x].Cells[y + i].Style.BackColor == Color.Gray)
-                        {
-                            valido = false;
-                        }
-                    }
-                }
-
-                if (valido)
-                {
-                    for (int i = 0; i < destructor.Slots; i++)
-                    {
-                        if (!destructor.Horizontal && valido)
-                        {
-                            dgvJugador.Rows[x + i].Cells[y].Style.BackColor = Color.Gray;
-                        }
-                        else if (valido)
-                        {
-                            dgvJugador.Rows[x].Cells[y + i].Style.BackColor = Color.Gray;
-                        }
-                    }
-
-                    btnDestructor.Enabled = false;
-                }
-                else
-                {
-                    MessageBox.Show("Los  barcos no pueden superponerse.");
-                }
-
-
-            }
-            catch (Exception)
-            {
-
-                MessageBox.Show("Barco fuera de los límites.");
-            }
-
+            Comprobacion(2);
+            btnDestructor.Enabled = false;
         }
 
         private void btnAcorazado_Click(object sender, EventArgs e)
         {
-            int y = int.Parse(dgvJugador.SelectedCells[0].ColumnIndex.ToString());
-            int x = int.Parse(dgvJugador.SelectedCells[0].RowIndex.ToString());
+            y = int.Parse(dgvJugador.SelectedCells[0].ColumnIndex.ToString());
+            x = int.Parse(dgvJugador.SelectedCells[0].RowIndex.ToString());
             bool horizontal = chkHorizontal.Checked;
 
-
-            Acorazado acorazado = new Acorazado(horizontal, x, y);
-
-            bool valido = true;
-            try
-            {
-                for (int i = 0; i < acorazado.Slots; i++)
-                {
-                    if (!acorazado.Horizontal && valido)
-                    {
-                        if (dgvJugador.Rows[x + i].Cells[y].Style.BackColor == Color.Gray)
-                        {
-                            valido = false;
-                        }
-                    }
-                    else if (valido)
-                    {
-                        if (dgvJugador.Rows[x].Cells[y + i].Style.BackColor == Color.Gray)
-                        {
-                            valido = false;
-                        }
-                    }
-                }
-
-                if (valido)
-                {
-                    for (int i = 0; i < acorazado.Slots; i++)
-                    {
-                        if (!acorazado.Horizontal && valido)
-                        {
-                            dgvJugador.Rows[x + i].Cells[y].Style.BackColor = Color.Gray;
-                        }
-                        else if (valido)
-                        {
-                            dgvJugador.Rows[x].Cells[y + i].Style.BackColor = Color.Gray;
-                        }
-                    }
-
-                    btnAcorazado.Enabled = false;
-                }
-                else
-                {
-                    MessageBox.Show("Los  barcos no pueden superponerse.");
-                }
-
-
-            }
-            catch (Exception)
-            {
-
-                MessageBox.Show("Barco fuera de los límites.");
-            }
-            
+            Comprobacion(3);
+            btnAcorazado.Enabled = false;
         }
 
         private void btnPortaviones_Click(object sender, EventArgs e)
         {
-            int y = int.Parse(dgvJugador.SelectedCells[0].ColumnIndex.ToString());
-            int x = int.Parse(dgvJugador.SelectedCells[0].RowIndex.ToString());
+            y = int.Parse(dgvJugador.SelectedCells[0].ColumnIndex.ToString());
+            x = int.Parse(dgvJugador.SelectedCells[0].RowIndex.ToString());
             bool horizontal = chkHorizontal.Checked;
 
+            Comprobacion(4);
 
-            Portaviones portaviones = new Portaviones(horizontal, x, y);
-
-            bool valido = true;
-
-            try
-            {
-                for (int i = 0; i < portaviones.Slots; i++)
-                {
-                    if (!portaviones.Horizontal && valido)
-                    {
-                        if (dgvJugador.Rows[x + i].Cells[y].Style.BackColor == Color.Gray)
-                        {
-                            valido = false;
-                        }
-                    }
-                    else if (valido)
-                    {
-                        if (dgvJugador.Rows[x].Cells[y + i].Style.BackColor == Color.Gray)
-                        {
-                            valido = false;
-                        }
-                    }
-                }
-
-                if (valido)
-                {
-                    for (int i = 0; i < portaviones.Slots; i++)
-                    {
-                        if (!portaviones.Horizontal && valido)
-                        {
-                            dgvJugador.Rows[x + i].Cells[y].Style.BackColor = Color.Gray;
-                        }
-                        else if (valido)
-                        {
-                            dgvJugador.Rows[x].Cells[y + i].Style.BackColor = Color.Gray;
-                        }
-                    }
-
-                    btnPortaviones.Enabled = false;
-                }
-                else
-                {
-                    MessageBox.Show("Los  barcos no pueden superponerse.");
-                }
-
-
-            }
-            catch (Exception)
-            {
-
-                MessageBox.Show("Barco fuera de los límites.");
-            }
-
-            
+            btnPortaviones.Enabled = false;
         }
 
         private void dgvEnemigo_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int y = int.Parse(dgvEnemigo.SelectedCells[0].ColumnIndex.ToString());
-            int x = int.Parse(dgvEnemigo.SelectedCells[0].RowIndex.ToString());
+            y = int.Parse(dgvEnemigo.SelectedCells[0].ColumnIndex.ToString());
+            x = int.Parse(dgvEnemigo.SelectedCells[0].RowIndex.ToString());
             lblCoordeanadas.Text = "Coordenadas: " + dgvEnemigo.Columns[y].Name + ", " + (x + 1).ToString();
 
         }
@@ -310,6 +157,58 @@ namespace BatallaNaval
             int puerto = int.Parse(txtPuerto.Text);
 
             bl.crearSocket(ip, puerto);
+        }
+
+        void Comprobacion(int indice)
+        {
+            bool valido = true;
+
+            try
+            {
+                for (int i = 0; i < indice; i++)
+                {
+                    if (!chkHorizontal.Checked && valido)
+                    {
+                        if (dgvJugador.Rows[x + i].Cells[y].Style.BackColor == Color.Gray)
+                        {
+                            valido = false;
+                        }
+                    }
+                    else if (valido)
+                    {
+                        if (dgvJugador.Rows[x].Cells[y + i].Style.BackColor == Color.Gray)
+                        {
+                            valido = false;
+                        }
+                    }
+                }
+
+                if (valido)
+                {
+                    for (int i = 0; i < indice; i++)
+                    {
+                        if (!chkHorizontal.Checked && valido)
+                        {
+                            dgvJugador.Rows[x + i].Cells[y].Style.BackColor = Color.Gray;
+                        }
+                        else if (valido)
+                        {
+                            dgvJugador.Rows[x].Cells[y + i].Style.BackColor = Color.Gray;
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Los  barcos no pueden superponerse.");
+                }
+
+
+            }
+            catch (Exception)
+            {
+
+                MessageBox.Show("Barco fuera de los límites.");
+            }
         }
     }
 }

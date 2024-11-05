@@ -32,6 +32,7 @@ namespace SocketServer
             {
                 mConexion.PuertoEscucha = puerto;
                 mConexion.EscucharPuerto();
+                MessageBox.Show("Puerto escuchado");
             }
             else
             {

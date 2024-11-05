@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using BE;
 using System.Threading;
 using System.Runtime.InteropServices;
 
@@ -85,11 +84,6 @@ namespace Socket
                 }
             }
         }
-
-
-
-
-
 
         public void LiberarTodo()
         {

@@ -50,6 +50,7 @@ namespace Sockets
 
                     Escuchador = new TcpListener(PuertoEscucha);
                     Escuchador.Start();
+                    
                 }
                 catch
                 {
