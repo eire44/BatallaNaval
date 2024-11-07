@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Socket;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace BatallaNaval
 {
@@ -97,14 +99,22 @@ namespace BatallaNaval
             if (dgvJugador.Rows[x].Cells[y].Style.BackColor != Color.Gray)
             {
                 dgvJugador.Rows[x].Cells[y].Style.BackColor = Color.Gray;
+
+                btnAgregarLancha.Enabled = false;
+
+                Datos datos = new Datos();
+                datos.x = x;
+                datos.y = y;
+                datos.horizontal = horizontal;
+                datos.idBarco = 3;
+
+                pasarDatos(datos);
             }
             else
             {
                 MessageBox.Show("No se puede colocar el barco.");
             }
 
-
-            btnAgregarLancha.Enabled = false;
         }
 
         private void btnDestructor_Click(object sender, EventArgs e)
@@ -114,8 +124,19 @@ namespace BatallaNaval
             bool horizontal = chkHorizontal.Checked;
 
 
-            Comprobacion(2);
-            btnDestructor.Enabled = false;
+            if (Comprobacion(2))
+            {
+                btnDestructor.Enabled = false;
+
+                Datos datos = new Datos();
+                datos.x = x;
+                datos.y = y;
+                datos.horizontal = horizontal;
+                datos.idBarco = 2;
+
+                pasarDatos(datos);
+            }
+
         }
 
         private void btnAcorazado_Click(object sender, EventArgs e)
@@ -124,8 +145,18 @@ namespace BatallaNaval
             x = int.Parse(dgvJugador.SelectedCells[0].RowIndex.ToString());
             bool horizontal = chkHorizontal.Checked;
 
-            Comprobacion(3);
-            btnAcorazado.Enabled = false;
+            if(Comprobacion(3))
+            {
+                btnAcorazado.Enabled = false;
+
+                Datos datos = new Datos();
+                datos.x = x;
+                datos.y = y;
+                datos.horizontal = horizontal;
+                datos.idBarco = 1;
+
+                pasarDatos(datos);
+            }
         }
 
         private void btnPortaviones_Click(object sender, EventArgs e)
@@ -134,9 +165,19 @@ namespace BatallaNaval
             x = int.Parse(dgvJugador.SelectedCells[0].RowIndex.ToString());
             bool horizontal = chkHorizontal.Checked;
 
-            Comprobacion(4);
 
-            btnPortaviones.Enabled = false;
+            if (Comprobacion(4))
+            {
+                btnPortaviones.Enabled = false;
+
+                Datos datos = new Datos();
+                datos.x = x;
+                datos.y = y;
+                datos.horizontal = horizontal;
+                datos.idBarco = 0;
+
+                pasarDatos(datos);
+            }
         }
 
         private void dgvEnemigo_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -157,7 +198,7 @@ namespace BatallaNaval
             btnConectar.Enabled = false;
         }
 
-        void Comprobacion(int indice)
+        bool Comprobacion(int indice)
         {
             bool valido = true;
 
@@ -206,7 +247,20 @@ namespace BatallaNaval
             {
 
                 MessageBox.Show("Barco fuera de los límites.");
+                valido = false;
             }
+
+            return valido;
+        }
+
+
+        private void pasarDatos(Datos dato)
+        {
+            dato.estado = "holiiis";
+            string mJson = JsonConvert.SerializeObject(dato, Formatting.Indented);
+            File.WriteAllText("Barco.json", mJson, Encoding.UTF8);
+
+            //socket.datos(mJson);
         }
     }
 }

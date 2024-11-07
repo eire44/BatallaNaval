@@ -23,6 +23,8 @@ namespace SocketServer
         private void Form1_Load(object sender, EventArgs e)
         {
             cmbIPs.Items.AddRange(mConexion.ObtenerDireccionesLocales());
+
+            mConexion.SeRecibieronDatos += SeRecibieronDatosHandler;
         }
 
         private void btnEscuchar_Click(object sender, EventArgs e)
@@ -38,6 +40,25 @@ namespace SocketServer
             {
                 MessageBox.Show("El puerto debe conformarse por número", "Error");
             }
+        }
+
+        private void SeRecibieronDatosHandler(string pDatos)
+        {
+            //txtDatos.Text = pDatos;
+            ActualizarTextBox(pDatos);
+            
+        }
+
+        delegate void ActualizarTextBoxDelegate(string pTexto);
+        void ActualizarTextBox(string pTexto)
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke(new ActualizarTextBoxDelegate(ActualizarTextBox), pTexto);
+                return;
+            }
+
+            txtDatos.AppendText(pTexto);
         }
     }
 }

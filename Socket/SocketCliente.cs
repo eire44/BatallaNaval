@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Runtime.InteropServices;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace Socket
 {
@@ -52,6 +54,24 @@ namespace Socket
                             break;
                         }
 
+                        if(TcpClient.Connected && NetworkStream.CanWrite)
+                        {
+                            //var objeto = new
+                            //{
+                            //    Nombre = "Batalla Naval",
+                            //    Jugadores = 2,
+                            //    Estado = "En curso"
+                            //};
+                            //string json = JsonConvert.SerializeObject(objeto);
+                            string json = File.ReadAllText("Barcos.json", Encoding.UTF8);
+                            if (TcpClient.Connected && NetworkStream.CanWrite)
+                            {
+                                byte[] datosAEnviar = Encoding.UTF8.GetBytes(json);
+                                NetworkStream.Write(datosAEnviar, 0, datosAEnviar.Length);
+                            }
+
+                        }
+
                         if (TcpClient.Available > 0)
                         {
                             var mBytes = new byte[TcpClient.ReceiveBufferSize + 1];
@@ -85,6 +105,13 @@ namespace Socket
                     LiberarTodo();
                 }
             }
+        }
+
+        public void datos (string json)
+        {
+
+            byte[] datosAEnviar = Encoding.UTF8.GetBytes(json);
+            NetworkStream.Write(datosAEnviar, 0, datosAEnviar.Length);
         }
 
         public void LiberarTodo()

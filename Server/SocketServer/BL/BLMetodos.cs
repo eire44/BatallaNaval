@@ -17,7 +17,7 @@ namespace BL
 
         public void asociarEventos()
         {
-            sc.DatosRecibidos += pasarDatos;
+            //sc.DatosRecibidos += pasarDatos;
             //sc.SocketDesconectado += DesconectadoHandlerHandler;
         }
 

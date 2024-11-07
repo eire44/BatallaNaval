@@ -34,43 +34,41 @@
             this.btnEscuchar = new System.Windows.Forms.Button();
             this.cmbIPs = new System.Windows.Forms.ComboBox();
             this.btnDetener = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtDatos = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(32, 23);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(43, 28);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 13);
+            this.label1.Size = new System.Drawing.Size(80, 16);
             this.label1.TabIndex = 0;
             this.label1.Text = "IPs Locales:";
             // 
             // txtPuerto
             // 
-            this.txtPuerto.Location = new System.Drawing.Point(199, 51);
-            this.txtPuerto.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtPuerto.Location = new System.Drawing.Point(265, 63);
+            this.txtPuerto.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtPuerto.Name = "txtPuerto";
-            this.txtPuerto.Size = new System.Drawing.Size(116, 20);
+            this.txtPuerto.Size = new System.Drawing.Size(153, 22);
             this.txtPuerto.TabIndex = 3;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(196, 23);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Location = new System.Drawing.Point(261, 28);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 13);
+            this.label2.Size = new System.Drawing.Size(49, 16);
             this.label2.TabIndex = 2;
             this.label2.Text = "Puerto:";
             // 
             // btnEscuchar
             // 
-            this.btnEscuchar.Location = new System.Drawing.Point(346, 31);
-            this.btnEscuchar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnEscuchar.Location = new System.Drawing.Point(461, 38);
+            this.btnEscuchar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnEscuchar.Name = "btnEscuchar";
-            this.btnEscuchar.Size = new System.Drawing.Size(88, 37);
+            this.btnEscuchar.Size = new System.Drawing.Size(117, 46);
             this.btnEscuchar.TabIndex = 4;
             this.btnEscuchar.Text = "Escuchar";
             this.btnEscuchar.UseVisualStyleBackColor = true;
@@ -79,44 +77,44 @@
             // cmbIPs
             // 
             this.cmbIPs.FormattingEnabled = true;
-            this.cmbIPs.Location = new System.Drawing.Point(34, 50);
-            this.cmbIPs.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cmbIPs.Location = new System.Drawing.Point(45, 62);
+            this.cmbIPs.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbIPs.Name = "cmbIPs";
-            this.cmbIPs.Size = new System.Drawing.Size(141, 21);
+            this.cmbIPs.Size = new System.Drawing.Size(187, 24);
             this.cmbIPs.TabIndex = 5;
             // 
             // btnDetener
             // 
-            this.btnDetener.Location = new System.Drawing.Point(466, 31);
-            this.btnDetener.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnDetener.Location = new System.Drawing.Point(621, 38);
+            this.btnDetener.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnDetener.Name = "btnDetener";
-            this.btnDetener.Size = new System.Drawing.Size(88, 37);
+            this.btnDetener.Size = new System.Drawing.Size(117, 46);
             this.btnDetener.TabIndex = 6;
             this.btnDetener.Text = "Detener";
             this.btnDetener.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // txtDatos
             // 
-            this.textBox1.Location = new System.Drawing.Point(38, 99);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(517, 244);
-            this.textBox1.TabIndex = 7;
+            this.txtDatos.Location = new System.Drawing.Point(51, 122);
+            this.txtDatos.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtDatos.Multiline = true;
+            this.txtDatos.Name = "txtDatos";
+            this.txtDatos.Size = new System.Drawing.Size(688, 299);
+            this.txtDatos.TabIndex = 7;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(600, 366);
-            this.Controls.Add(this.textBox1);
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.txtDatos);
             this.Controls.Add(this.btnDetener);
             this.Controls.Add(this.cmbIPs);
             this.Controls.Add(this.btnEscuchar);
             this.Controls.Add(this.txtPuerto);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -133,7 +131,7 @@
         private System.Windows.Forms.Button btnEscuchar;
         private System.Windows.Forms.ComboBox cmbIPs;
         private System.Windows.Forms.Button btnDetener;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtDatos;
     }
 }
 

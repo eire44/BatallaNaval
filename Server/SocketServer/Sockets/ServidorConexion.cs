@@ -7,6 +7,9 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Runtime.InteropServices;
+using Newtonsoft.Json;
+using System.IO;
+using BE;
 
 namespace Sockets
 {
@@ -82,15 +85,30 @@ namespace Sockets
                         if (TcpClient.Available > 0)
                         {
                             var mBytes = new byte[TcpClient.ReceiveBufferSize + 1];
-                            if (networkStream.Read(mBytes, 0, TcpClient.ReceiveBufferSize) <= 0)
+                            int bytesRead = networkStream.Read(mBytes, 0, TcpClient.ReceiveBufferSize);
+                            if (bytesRead <= 0)
                             {
                                 break;
                             }
 
-                            string mDatosRecibidos = Encoding.ASCII.GetString(mBytes);
+                            // Convertir los datos a string
+                            string mDatosRecibidos = Encoding.UTF8.GetString(mBytes, 0, bytesRead);
+
+                            // Deserializar los datos JSON recibidos
+                            Datos objetoRecibido = JsonConvert.DeserializeObject<Datos>(mDatosRecibidos);
+
+                            // Procesar o mostrar los datos recibidos
+                            //MessageBox.Show($"Datos recibidos: {mDatosRecibidos}");
 
                             if (SeRecibieronDatos != null)
-                                SeRecibieronDatos.Invoke(mDatosRecibidos);
+                            {
+                                SeRecibieronDatos.Invoke("objetoRecibido.estado");
+                            }
+
+                            //string mDatosRecibidos = Encoding.ASCII.GetString(mBytes);
+
+                            //if (SeRecibieronDatos != null)
+                            //    SeRecibieronDatos.Invoke(mDatosRecibidos);
                         }
                     }
 
