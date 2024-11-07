@@ -80,29 +80,36 @@ namespace Sockets
                         networkStream = TcpClient.GetStream();
                         if (networkStream == null | TcpClient.Connected == false | !networkStream.CanRead)
                         {
+                            SeConectoCliente.Invoke("AAAA algo salió mal :((((");
                             break;
                         }
+
+                        //SeConectoCliente.Invoke(TcpClient.Available.ToString());
                         if (TcpClient.Available > 0)
                         {
                             var mBytes = new byte[TcpClient.ReceiveBufferSize + 1];
                             int bytesRead = networkStream.Read(mBytes, 0, TcpClient.ReceiveBufferSize);
+                            SeConectoCliente.Invoke(bytesRead.ToString());
                             if (bytesRead <= 0)
                             {
+                                SeConectoCliente.Invoke("no tiene bytes para leer");
                                 break;
                             }
 
                             // Convertir los datos a string
                             string mDatosRecibidos = Encoding.UTF8.GetString(mBytes, 0, bytesRead);
 
+                            SeConectoCliente.Invoke(mDatosRecibidos);
+
                             // Deserializar los datos JSON recibidos
-                            Datos objetoRecibido = JsonConvert.DeserializeObject<Datos>(mDatosRecibidos);
+                            var objetoRecibido = JsonConvert.DeserializeObject(mDatosRecibidos);
 
                             // Procesar o mostrar los datos recibidos
                             //MessageBox.Show($"Datos recibidos: {mDatosRecibidos}");
 
                             if (SeRecibieronDatos != null)
                             {
-                                SeRecibieronDatos.Invoke("objetoRecibido.estado");
+                                SeRecibieronDatos.Invoke(objetoRecibido.ToString());
                             }
 
                             //string mDatosRecibidos = Encoding.ASCII.GetString(mBytes);
@@ -133,6 +140,7 @@ namespace Sockets
         {
             if (TcpClient != null)
             {
+                SeConectoCliente.Invoke("Se libero el cliente");
                 if (networkStream != null)
                 {
                     networkStream.Close();

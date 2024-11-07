@@ -63,11 +63,13 @@ namespace Socket
                             //    Estado = "En curso"
                             //};
                             //string json = JsonConvert.SerializeObject(objeto);
-                            string json = File.ReadAllText("Barcos.json", Encoding.UTF8);
+                            string json = File.ReadAllText("Barco.json", Encoding.UTF8);
                             if (TcpClient.Connected && NetworkStream.CanWrite)
                             {
                                 byte[] datosAEnviar = Encoding.UTF8.GetBytes(json);
                                 NetworkStream.Write(datosAEnviar, 0, datosAEnviar.Length);
+
+                                ayuda(json, datosAEnviar.Length);
                             }
 
                         }
@@ -105,6 +107,15 @@ namespace Socket
                     LiberarTodo();
                 }
             }
+        }
+
+        public string datosJ;
+        public int tamano;
+
+        public void ayuda(string datosJSON, int tamanoDatos)
+        {
+            datosJ = datosJSON;
+            tamano = tamanoDatos;
         }
 
         public void datos (string json)

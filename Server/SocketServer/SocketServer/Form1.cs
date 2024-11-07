@@ -24,6 +24,7 @@ namespace SocketServer
         {
             cmbIPs.Items.AddRange(mConexion.ObtenerDireccionesLocales());
 
+            mConexion.SeConectoCliente += SeConectoClienteHandler;
             mConexion.SeRecibieronDatos += SeRecibieronDatosHandler;
         }
 
@@ -57,8 +58,13 @@ namespace SocketServer
                 this.Invoke(new ActualizarTextBoxDelegate(ActualizarTextBox), pTexto);
                 return;
             }
+            MessageBox.Show(pTexto);
+            //txtDatos.AppendText(pTexto);
+        }
 
-            txtDatos.AppendText(pTexto);
+        void SeConectoClienteHandler(string datos)
+        {
+            ActualizarTextBox(datos);
         }
     }
 }

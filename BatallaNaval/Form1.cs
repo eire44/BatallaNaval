@@ -260,6 +260,9 @@ namespace BatallaNaval
             string mJson = JsonConvert.SerializeObject(dato, Formatting.Indented);
             File.WriteAllText("Barco.json", mJson, Encoding.UTF8);
 
+
+            //MessageBox.Show("Datos:" + socket.datosJ);
+            ///MessageBox.Show("Tamaño: " + socket.tamano);
             //socket.datos(mJson);
         }
     }

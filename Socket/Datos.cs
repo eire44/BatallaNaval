@@ -11,8 +11,7 @@ namespace Socket
     {
         public int x, y;
         public bool horizontal;
-        public string estado;
         public int idBarco;
-        //public bool turno;
+        public string estado;
     }
 }
