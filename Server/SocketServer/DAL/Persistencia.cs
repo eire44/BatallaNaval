@@ -15,28 +15,8 @@ namespace DAL
         SqlConnection conexion = new SqlConnection("Data Source=.;Initial Catalog=DatabaseTest;Integrated Security=True");
         private static int ID;
 
-        public void insertarDatos(Datos dato)
+        public void insertarDatos(Datos dato, BEBarcos barco)
         {
-            BEBarcos barco;
-            if(dato.idBarco == 0)
-            {
-                barco = new Portaviones(dato.horizontal, dato.x, dato.y);
-
-            } else if(dato.idBarco == 1)
-            {
-                barco = new Acorazado(dato.horizontal, dato.x, dato.y);
-            }
-            else if (dato.idBarco == 2)
-            {
-                barco = new Destructor(dato.horizontal, dato.x, dato.y);
-            }
-            else if (dato.idBarco == 3)
-            {
-                barco = new Lancha(dato.horizontal, dato.x, dato.y);
-            } else
-            {
-                barco = null;
-            }
 
             SqlCommand insertar = new SqlCommand("INSERT INTO Barcos (Barco_Id, Barco_Tipo, Barco_Direccion, Barco_Slots, Barco_Vida, Barco_Jugador) VALUES (@pID, @pTipo, @pDireccion,@pSlots, @pVida, @pJugador)", conexion);
             insertar.Parameters.AddWithValue("@pID", generarId());
@@ -64,6 +44,11 @@ namespace DAL
             ID++;
 
             return ID;
+        }
+
+        public void insertarDatos()
+        {
+
         }
     }
 }
