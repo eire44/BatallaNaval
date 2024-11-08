@@ -96,12 +96,8 @@ namespace Sockets
                                 break;
                             }
 
-                            // Convertir los datos a string
                             string mDatosRecibidos = Encoding.UTF8.GetString(mBytes, 0, bytesRead);
 
-                            //SeConectoCliente.Invoke(mDatosRecibidos);
-
-                            // Deserializar los datos JSON recibidos
                             List<Datos> objetoRecibido = JsonConvert.DeserializeObject<List<Datos>>(mDatosRecibidos);
 
                             SeConectoCliente.Invoke(objetoRecibido[0].x.ToString());

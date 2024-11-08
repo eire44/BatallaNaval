@@ -11,13 +11,16 @@ using System.Windows.Forms;
 using Socket;
 using Newtonsoft.Json;
 using System.IO;
+using System.Threading;
 
 namespace BatallaNaval
 {
     public partial class Form1 : Form
     {
         int x, y;
-        string fileJSON = "Barco.json";
+        private int indiceTerminar;
+        //private bool c = true;
+        //Thread hiloTerminar;
         public Form1()
         {
             InitializeComponent();
@@ -87,6 +90,12 @@ namespace BatallaNaval
 
             #endregion
 
+            btnTerminar.Enabled = false;
+
+            //hiloTerminar = new Thread(confirmarBoton);
+            //hiloTerminar.Start();
+
+            tiempoTerminar.Start();
         }
         List<Datos> listaDatos = new List<Datos>();
 
@@ -110,6 +119,9 @@ namespace BatallaNaval
                 datos.idBarco = 3;
 
                 listaDatos.Add(datos);
+
+                
+
             }
             else
             {
@@ -139,6 +151,22 @@ namespace BatallaNaval
             }
 
         }
+
+        //private void confirmarBoton()
+        //{ 
+        //    while(c)
+        //    {
+        //        if (btnAcorazado.Enabled == false && btnDestructor.Enabled == false && btnPortaviones.Enabled == false
+        //            && btnAgregarLancha.Enabled == false && txtIP.Text != "" && txtPuerto.Text != "")
+        //        {
+        //            btnTerminar.Enabled = true;
+        //            c = false;
+        //            hiloTerminar.Abort();
+        //            hiloTerminar = null;
+        //        }
+        //    }
+            
+        //}
 
         private void btnAcorazado_Click(object sender, EventArgs e)
         {
@@ -190,13 +218,7 @@ namespace BatallaNaval
         }
 
         SocketCliente socket = new SocketCliente();
-        private void btnConectar_Click(object sender, EventArgs e)
-        {
-            socket.PuertoRemoto = txtPuerto.Text;
-            socket.IPRemota = txtIP.Text;
-            MessageBox.Show(socket.Conectar().ToString());
-            btnConectar.Enabled = false;
-        }
+        
 
         bool Comprobacion(int indice)
         {
@@ -235,6 +257,10 @@ namespace BatallaNaval
                             dgvJugador.Rows[x].Cells[y + i].Style.BackColor = Color.Gray;
                         }
                     }
+
+
+                    indiceTerminar++;
+                    lblTurno.Text = indiceTerminar.ToString();
                 }
                 else
                 {
@@ -250,6 +276,12 @@ namespace BatallaNaval
                 valido = false;
             }
 
+            if(indiceTerminar >= 4 && txtIP.Text != "" && txtPuerto.Text != "")
+            {
+                btnTerminar.Enabled = true;
+            }
+            
+
             return valido;
         }
 
@@ -258,22 +290,20 @@ namespace BatallaNaval
             socket.PuertoRemoto = txtPuerto.Text;
             socket.IPRemota = txtIP.Text;
         }
+
+        private void tiempoTerminar_Tick(object sender, EventArgs e)
+        {
+            if (btnAcorazado.Enabled == false && btnDestructor.Enabled == false && btnPortaviones.Enabled == false
+                    && btnAgregarLancha.Enabled == false && txtIP.Text != "" && txtPuerto.Text != "")
+            {
+                btnTerminar.Enabled = true;
+            }
+        }
+
         private void btnTerminar_Click(object sender, EventArgs e)
         {
             setIPAndPort();
-            if (socket.Conectar())
-            {
-                string mJson = JsonConvert.SerializeObject(listaDatos, Formatting.Indented);
-
-                if (File.Exists(fileJSON))
-                {
-                    File.Delete(fileJSON);
-                }
-                File.WriteAllText(fileJSON, mJson);
-                socket.writeOnce = true;
-                socket.iniciarHilo();
-                //socket.LiberarTodo();
-            }
+            socket.generarJSON(listaDatos);
         }
     }
 }

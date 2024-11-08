@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.dgvJugador = new System.Windows.Forms.DataGridView();
             this.dgvEnemigo = new System.Windows.Forms.DataGridView();
             this.btnAgregarLancha = new System.Windows.Forms.Button();
@@ -39,12 +40,12 @@
             this.btnPortaviones = new System.Windows.Forms.Button();
             this.btnAcorazado = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnConectar = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtPuerto = new System.Windows.Forms.TextBox();
             this.txtIP = new System.Windows.Forms.TextBox();
             this.btnTerminar = new System.Windows.Forms.Button();
+            this.tiempoTerminar = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgvJugador)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEnemigo)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -106,7 +107,7 @@
             // lblTurno
             // 
             this.lblTurno.AutoSize = true;
-            this.lblTurno.Location = new System.Drawing.Point(499, 97);
+            this.lblTurno.Location = new System.Drawing.Point(912, 62);
             this.lblTurno.Name = "lblTurno";
             this.lblTurno.Size = new System.Drawing.Size(48, 16);
             this.lblTurno.TabIndex = 6;
@@ -158,7 +159,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.btnConectar);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.txtPuerto);
@@ -167,26 +167,15 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox1.Size = new System.Drawing.Size(1211, 69);
+            this.groupBox1.Size = new System.Drawing.Size(617, 69);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Conexión al Servidor";
             // 
-            // btnConectar
-            // 
-            this.btnConectar.Location = new System.Drawing.Point(669, 20);
-            this.btnConectar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnConectar.Name = "btnConectar";
-            this.btnConectar.Size = new System.Drawing.Size(131, 43);
-            this.btnConectar.TabIndex = 4;
-            this.btnConectar.Text = "Conectar";
-            this.btnConectar.UseVisualStyleBackColor = true;
-            this.btnConectar.Click += new System.EventHandler(this.btnConectar_Click);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(339, 37);
+            this.label2.Location = new System.Drawing.Point(319, 36);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(49, 16);
             this.label2.TabIndex = 3;
@@ -195,7 +184,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(27, 34);
+            this.label1.Location = new System.Drawing.Point(7, 33);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(22, 16);
             this.label1.TabIndex = 2;
@@ -203,7 +192,7 @@
             // 
             // txtPuerto
             // 
-            this.txtPuerto.Location = new System.Drawing.Point(405, 34);
+            this.txtPuerto.Location = new System.Drawing.Point(385, 33);
             this.txtPuerto.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtPuerto.Name = "txtPuerto";
             this.txtPuerto.Size = new System.Drawing.Size(216, 22);
@@ -211,7 +200,7 @@
             // 
             // txtIP
             // 
-            this.txtIP.Location = new System.Drawing.Point(77, 34);
+            this.txtIP.Location = new System.Drawing.Point(57, 33);
             this.txtIP.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtIP.Name = "txtIP";
             this.txtIP.Size = new System.Drawing.Size(216, 22);
@@ -219,13 +208,19 @@
             // 
             // btnTerminar
             // 
-            this.btnTerminar.Location = new System.Drawing.Point(429, 616);
+            this.btnTerminar.Location = new System.Drawing.Point(244, 649);
             this.btnTerminar.Name = "btnTerminar";
             this.btnTerminar.Size = new System.Drawing.Size(154, 51);
             this.btnTerminar.TabIndex = 13;
             this.btnTerminar.Text = "Terminar";
             this.btnTerminar.UseVisualStyleBackColor = true;
             this.btnTerminar.Click += new System.EventHandler(this.btnTerminar_Click);
+            // 
+            // tiempoTerminar
+            // 
+            this.tiempoTerminar.Enabled = true;
+            this.tiempoTerminar.Interval = 1000;
+            this.tiempoTerminar.Tick += new System.EventHandler(this.tiempoTerminar_Tick);
             // 
             // Form1
             // 
@@ -274,8 +269,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtPuerto;
         private System.Windows.Forms.TextBox txtIP;
-        private System.Windows.Forms.Button btnConectar;
         private System.Windows.Forms.Button btnTerminar;
+        private System.Windows.Forms.Timer tiempoTerminar;
     }
 }
 

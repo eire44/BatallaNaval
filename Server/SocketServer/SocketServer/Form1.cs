@@ -58,8 +58,8 @@ namespace SocketServer
                 this.Invoke(new ActualizarTextBoxDelegate(ActualizarTextBox), pTexto);
                 return;
             }
-            MessageBox.Show(pTexto);
-            //txtDatos.AppendText(pTexto);
+            //MessageBox.Show(pTexto);
+            txtDatos.AppendText(pTexto);
         }
 
         void SeConectoClienteHandler(string datos)

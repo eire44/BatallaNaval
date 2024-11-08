@@ -21,5 +21,7 @@ namespace BE
         public int CoordenadaY { get; set; }
 
         public int Vidas { get; set; }
+
+        public int Jugador { get; set; }
     }
 }

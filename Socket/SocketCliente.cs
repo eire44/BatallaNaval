@@ -20,6 +20,7 @@ namespace Socket
         private Thread thread;
         public bool writeOnce = false;
         public bool onlySend = false;
+        string fileJSON = "Barco.json";
 
         public event SeRecibieronDatosEventHandler DatosRecibidos;
 
@@ -46,6 +47,23 @@ namespace Socket
         {
             thread = new Thread(EsperarDatos);
             thread.Start();
+        }
+
+        public void generarJSON(List<Datos> listaDatos)
+        {
+            if (Conectar())
+            {
+                string mJson = JsonConvert.SerializeObject(listaDatos, Formatting.Indented);
+
+                if (File.Exists(fileJSON))
+                {
+                    File.Delete(fileJSON);
+                }
+                File.WriteAllText(fileJSON, mJson);
+                writeOnce = true;
+                iniciarHilo();
+                //socket.LiberarTodo();
+            }
         }
 
         public void EsperarDatos()
