@@ -17,6 +17,7 @@ namespace BatallaNaval
     public partial class Form1 : Form
     {
         int x, y;
+        string fileJSON = "Barco.json";
         public Form1()
         {
             InitializeComponent();
@@ -87,7 +88,7 @@ namespace BatallaNaval
             #endregion
 
         }
-
+        List<Datos> listaDatos = new List<Datos>();
 
         private void btnAgregarLancha_Click(object sender, EventArgs e)
         {
@@ -108,7 +109,7 @@ namespace BatallaNaval
                 datos.horizontal = horizontal;
                 datos.idBarco = 3;
 
-                pasarDatos(datos);
+                listaDatos.Add(datos);
             }
             else
             {
@@ -134,7 +135,7 @@ namespace BatallaNaval
                 datos.horizontal = horizontal;
                 datos.idBarco = 2;
 
-                pasarDatos(datos);
+                listaDatos.Add(datos);
             }
 
         }
@@ -155,7 +156,7 @@ namespace BatallaNaval
                 datos.horizontal = horizontal;
                 datos.idBarco = 1;
 
-                pasarDatos(datos);
+                listaDatos.Add(datos);
             }
         }
 
@@ -176,7 +177,7 @@ namespace BatallaNaval
                 datos.horizontal = horizontal;
                 datos.idBarco = 0;
 
-                pasarDatos(datos);
+                listaDatos.Add(datos);
             }
         }
 
@@ -193,7 +194,6 @@ namespace BatallaNaval
         {
             socket.PuertoRemoto = txtPuerto.Text;
             socket.IPRemota = txtIP.Text;
-
             MessageBox.Show(socket.Conectar().ToString());
             btnConectar.Enabled = false;
         }
@@ -253,17 +253,27 @@ namespace BatallaNaval
             return valido;
         }
 
-
-        private void pasarDatos(Datos dato)
+        private void setIPAndPort()
         {
-            dato.estado = "holiiis";
-            string mJson = JsonConvert.SerializeObject(dato, Formatting.Indented);
-            File.WriteAllText("Barco.json", mJson, Encoding.UTF8);
+            socket.PuertoRemoto = txtPuerto.Text;
+            socket.IPRemota = txtIP.Text;
+        }
+        private void btnTerminar_Click(object sender, EventArgs e)
+        {
+            setIPAndPort();
+            if (socket.Conectar())
+            {
+                string mJson = JsonConvert.SerializeObject(listaDatos, Formatting.Indented);
 
-
-            //MessageBox.Show("Datos:" + socket.datosJ);
-            ///MessageBox.Show("Tamaño: " + socket.tamano);
-            //socket.datos(mJson);
+                if (File.Exists(fileJSON))
+                {
+                    File.Delete(fileJSON);
+                }
+                File.WriteAllText(fileJSON, mJson);
+                socket.writeOnce = true;
+                socket.iniciarHilo();
+                //socket.LiberarTodo();
+            }
         }
     }
 }

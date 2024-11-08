@@ -99,11 +99,12 @@ namespace Sockets
                             // Convertir los datos a string
                             string mDatosRecibidos = Encoding.UTF8.GetString(mBytes, 0, bytesRead);
 
-                            SeConectoCliente.Invoke(mDatosRecibidos);
+                            //SeConectoCliente.Invoke(mDatosRecibidos);
 
                             // Deserializar los datos JSON recibidos
-                            var objetoRecibido = JsonConvert.DeserializeObject(mDatosRecibidos);
+                            List<Datos> objetoRecibido = JsonConvert.DeserializeObject<List<Datos>>(mDatosRecibidos);
 
+                            SeConectoCliente.Invoke(objetoRecibido[0].x.ToString());
                             // Procesar o mostrar los datos recibidos
                             //MessageBox.Show($"Datos recibidos: {mDatosRecibidos}");
 

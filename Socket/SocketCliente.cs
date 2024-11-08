@@ -18,6 +18,8 @@ namespace Socket
         private static TcpClient TcpClient;
         private static NetworkStream NetworkStream;
         private Thread thread;
+        public bool writeOnce = false;
+        public bool onlySend = false;
 
         public event SeRecibieronDatosEventHandler DatosRecibidos;
 
@@ -29,15 +31,21 @@ namespace Socket
 
         public bool Conectar()
         {
-            TcpClient = new TcpClient();
-            TcpClient.Connect(IPRemota, int.Parse(PuertoRemoto));
-            NetworkStream = TcpClient.GetStream();
-            IPRemota = TcpClient.Client.RemoteEndPoint.ToString();
+            if (TcpClient== null)
+            {
+                TcpClient = new TcpClient();
+                TcpClient.Connect(IPRemota, int.Parse(PuertoRemoto));
+                NetworkStream = TcpClient.GetStream();
+                IPRemota = TcpClient.Client.RemoteEndPoint.ToString();
+                
+            }
+            return TcpClient.Connected;
+        }
 
+        public void iniciarHilo()
+        {
             thread = new Thread(EsperarDatos);
             thread.Start();
-            
-            return TcpClient.Connected;
         }
 
         public void EsperarDatos()
@@ -54,24 +62,14 @@ namespace Socket
                             break;
                         }
 
-                        if(TcpClient.Connected && NetworkStream.CanWrite)
+                        if(TcpClient.Connected && NetworkStream.CanWrite && writeOnce)
                         {
-                            //var objeto = new
-                            //{
-                            //    Nombre = "Batalla Naval",
-                            //    Jugadores = 2,
-                            //    Estado = "En curso"
-                            //};
-                            //string json = JsonConvert.SerializeObject(objeto);
+
                             string json = File.ReadAllText("Barco.json", Encoding.UTF8);
-                            if (TcpClient.Connected && NetworkStream.CanWrite)
-                            {
-                                byte[] datosAEnviar = Encoding.UTF8.GetBytes(json);
-                                NetworkStream.Write(datosAEnviar, 0, datosAEnviar.Length);
-
-                                ayuda(json, datosAEnviar.Length);
-                            }
-
+                            byte[] datosAEnviar = Encoding.UTF8.GetBytes(json);
+                            NetworkStream.Write(datosAEnviar, 0, datosAEnviar.Length);
+                            writeOnce = false;
+                            
                         }
 
                         if (TcpClient.Available > 0)
@@ -109,21 +107,6 @@ namespace Socket
             }
         }
 
-        public string datosJ;
-        public int tamano;
-
-        public void ayuda(string datosJSON, int tamanoDatos)
-        {
-            datosJ = datosJSON;
-            tamano = tamanoDatos;
-        }
-
-        public void datos (string json)
-        {
-
-            byte[] datosAEnviar = Encoding.UTF8.GetBytes(json);
-            NetworkStream.Write(datosAEnviar, 0, datosAEnviar.Length);
-        }
 
         public void LiberarTodo()
         {
