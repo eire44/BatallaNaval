@@ -84,7 +84,6 @@ namespace Sockets
                             break;
                         }
 
-                        //SeConectoCliente.Invoke(TcpClient.Available.ToString());
                         if (TcpClient.Available > 0)
                         {
                             var mBytes = new byte[TcpClient.ReceiveBufferSize + 1];
@@ -101,18 +100,12 @@ namespace Sockets
                             List<Datos> objetoRecibido = JsonConvert.DeserializeObject<List<Datos>>(mDatosRecibidos);
 
                             SeConectoCliente.Invoke(objetoRecibido[0].x.ToString());
-                            // Procesar o mostrar los datos recibidos
-                            //MessageBox.Show($"Datos recibidos: {mDatosRecibidos}");
 
                             if (SeRecibieronDatos != null)
                             {
                                 SeRecibieronDatos.Invoke(objetoRecibido.ToString());
                             }
 
-                            //string mDatosRecibidos = Encoding.ASCII.GetString(mBytes);
-
-                            //if (SeRecibieronDatos != null)
-                            //    SeRecibieronDatos.Invoke(mDatosRecibidos);
                         }
                     }
 
