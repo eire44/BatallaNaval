@@ -8,6 +8,7 @@ using System.Threading;
 using System.Runtime.InteropServices;
 using Newtonsoft.Json;
 using System.IO;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace Socket
 {
@@ -122,6 +123,15 @@ namespace Socket
                         SocketDesconectado.Invoke();
                     LiberarTodo();
                 }
+            }
+        }
+
+        public void EnviarMensaje(string mensaje)
+        {
+            if (NetworkStream != null && NetworkStream.CanWrite)
+            {
+                byte[] datos = Encoding.ASCII.GetBytes(mensaje);
+                NetworkStream.Write(datos, 0, datos.Length);
             }
         }
 

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Sockets;
+using BL;
 
 namespace SocketServer
 {
@@ -18,14 +19,13 @@ namespace SocketServer
         {
             InitializeComponent();
         }
-        ServidorConexion mConexion = new ServidorConexion();
+        BLMetodos BLMetodos = new BLMetodos();
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            cmbIPs.Items.AddRange(mConexion.ObtenerDireccionesLocales());
+            cmbIPs.Items.AddRange(BLMetodos.obtenerDirecciones());
 
-            mConexion.SeConectoCliente += SeConectoClienteHandler;
-            mConexion.SeRecibieronDatos += SeRecibieronDatosHandler;
+            BLMetodos.RetornarAUI += SeRecibieronDatosHandler;
         }
 
         private void btnEscuchar_Click(object sender, EventArgs e)
@@ -33,8 +33,7 @@ namespace SocketServer
             int puerto;
             if (int.TryParse(txtPuerto.Text, out puerto))
             {
-                mConexion.PuertoEscucha = puerto;
-                mConexion.EscucharPuerto();
+                BLMetodos.escucharPuerto(puerto);
                 MessageBox.Show("Puerto escuchado");
             }
             else
@@ -45,7 +44,6 @@ namespace SocketServer
 
         private void SeRecibieronDatosHandler(string pDatos)
         {
-            //txtDatos.Text = pDatos;
             ActualizarTextBox(pDatos);
             
         }

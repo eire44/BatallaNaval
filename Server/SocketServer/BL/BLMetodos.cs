@@ -5,12 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 using BE;
 using DAL;
+using Sockets;
+using static Sockets.ServidorConexion;
 
 namespace BL
 {
     public class BLMetodos
     {
         Persistencia persistencia = new Persistencia();
+        ServidorConexion servidorConexion = new ServidorConexion();
+
+        public delegate void retornarInfoAUI(string s);
+        public event retornarInfoAUI RetornarAUI;
+
+        public BLMetodos()
+        {
+            servidorConexion.SeRecibieronDatos += devolverEvento;
+        }
         public void pasarAInsertar(List<Datos> datos)
         {
             foreach (Datos dato in datos)
@@ -43,20 +54,34 @@ namespace BL
             }
         }
 
-
-        public void generarCoordenadas()
+        public void escucharPuerto(int puerto)
         {
-            for (int i = 0; i < indice; i++)
-            {
-                if (!chkHorizontal.Checked && valido)
-                {
-                    dgvJugador.Rows[x + i].Cells[y].Style.BackColor = Color.Gray;
-                }
-                else if (valido)
-                {
-                    dgvJugador.Rows[x].Cells[y + i].Style.BackColor = Color.Gray;
-                }
-            }
+            servidorConexion.PuertoEscucha = puerto;
+            servidorConexion.EscucharPuerto();
         }
+
+        public string[] obtenerDirecciones()
+        {
+            return servidorConexion.ObtenerDireccionesLocales();
+        }
+
+        public void devolverEvento(string s)
+        {
+            RetornarAUI.Invoke(s);
+        }
+        //public void generarCoordenadas()
+        //{
+        //    for (int i = 0; i < indice; i++)
+        //    {
+        //        if (!chkHorizontal.Checked && valido)
+        //        {
+        //            dgvJugador.Rows[x + i].Cells[y].Style.BackColor = Color.Gray;
+        //        }
+        //        else if (valido)
+        //        {
+        //            dgvJugador.Rows[x].Cells[y + i].Style.BackColor = Color.Gray;
+        //        }
+        //    }
+        //}
     }
 }
