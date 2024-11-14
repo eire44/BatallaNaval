@@ -59,10 +59,6 @@
       <Project>{0cea57bb-606d-46f8-8ef3-56ea06a7399a}</Project>
       <Name>DAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sockets\Sockets.csproj">
-      <Project>{d2439993-efba-4b03-9f96-c7f1e28ae9ef}</Project>
-      <Name>Sockets</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

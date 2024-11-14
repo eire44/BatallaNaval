@@ -10,24 +10,22 @@ using System.Runtime.InteropServices;
 using Newtonsoft.Json;
 using System.IO;
 using BE;
+using BL;
 
 namespace Sockets
 {
     public class ServidorConexion
     {
-
         public int PuertoEscucha;
         private TcpListener Escuchador;
 
-        private static TcpClient TcpClient1;
-        private static TcpClient TcpClient2;
-        public List<TcpClient> ListaTcpClients = new List<TcpClient>();
+        ClientesConectados clientesInterfaz = new ClientesConectados();
 
-        private static NetworkStream networkStreamClient1;
-        private static NetworkStream networkStreamClient2;
         private Thread threadJugadores;
 
-        private bool inicializacion;
+        Thread threadEscuchador;
+
+        private bool inicializacion = true;
 
         public event SeRecibieronDatosEventHandler SeRecibieronDatos;
 
@@ -40,8 +38,11 @@ namespace Sockets
             mDireccionesStr = new string[mDireccionesIP.Length];
             for (int x = 0, loopTo = mDireccionesIP.Length - 1; x <= loopTo; x++)
                 mDireccionesStr[x] = mDireccionesIP[x].ToString();
+
+
             return mDireccionesStr;
         }
+
 
         public void EscucharPuerto()
         {
@@ -69,30 +70,28 @@ namespace Sockets
             {
                 while (true)
                 {
-                    if (TcpClient1 == null)
+                    if (clientesInterfaz.Count() == 0)
                     {
-                        TcpClient1 = Escuchador.AcceptTcpClient();
-                        ListaTcpClients.Add(TcpClient1);
+
+                        Cliente cliente = new Cliente();
+                        cliente.clienteTCP = Escuchador.AcceptTcpClient();
+                        cliente.stream = cliente.clienteTCP.GetStream();
+                        cliente.numCliente = 1;
+                        clientesInterfaz.AgregarCliente(cliente);
                     }
-                    else if (TcpClient2 == null)
+                    else if (clientesInterfaz.Count() == 1)
                     {
-                        TcpClient2 = Escuchador.AcceptTcpClient();
-                        ListaTcpClients.Add(TcpClient2);
+                        Cliente cliente = new Cliente();
+                        cliente.clienteTCP = Escuchador.AcceptTcpClient();
+                        cliente.stream = cliente.clienteTCP.GetStream();
+                        cliente.numCliente = 2;
+                        clientesInterfaz.AgregarCliente(cliente);
                         break;
                     }
                 }
 
                 while (true)
                 {
-                    if (TcpClient1 != null)
-                    {
-                        networkStreamClient1 = TcpClient1.GetStream();
-                    }
-                    if (TcpClient2 != null)
-                    {
-                        networkStreamClient2 = TcpClient2.GetStream();
-                    }
-
                     //if (networkStream == null | TcpClient1.Connected == false | !networkStream.CanRead)
                     //{
                     //    SeConectoCliente.Invoke("AAAA algo salió mal :((((");
@@ -100,22 +99,15 @@ namespace Sockets
                     //}
 
                     //SeConectoCliente.Invoke(TcpClient.Available.ToString());
-                    foreach (TcpClient cliente in ListaTcpClients)
+                    foreach (Cliente cliente in clientesInterfaz)
                     {
-                        if (cliente.Available > 0 && inicializacion)
+                        if (cliente.clienteTCP.Available > 0 && inicializacion)
                         {
-                            var mBytes = new byte[cliente.ReceiveBufferSize + 1];
+                            var mBytes = new byte[cliente.clienteTCP.ReceiveBufferSize + 1];
                             int bytesRead;
-                            if (cliente == ListaTcpClients[0])
-                            {
 
-                                bytesRead = networkStreamClient1.Read(mBytes, 0, cliente.ReceiveBufferSize);
-                            }
-                            else
-                            {
-                                bytesRead = networkStreamClient2.Read(mBytes, 0, cliente.ReceiveBufferSize);
-                            }
-
+                            bytesRead = cliente.stream.Read(mBytes, 0, cliente.clienteTCP.ReceiveBufferSize);
+                            
 
                             SeRecibieronDatos.Invoke(bytesRead.ToString());
                             if (bytesRead <= 0)
@@ -131,7 +123,7 @@ namespace Sockets
                             SeRecibieronDatos.Invoke(objetoRecibido[0].x.ToString());
                         }
 
-                        EnviarMensaje(cliente, "");
+                        EnviarMensaje(cliente.clienteTCP, "");
                     }
 
                     inicializacion = false;
@@ -146,8 +138,11 @@ namespace Sockets
             {
                 if (threadJugadores != null && threadJugadores.ThreadState == ThreadState.Running)
                 {
-                    LiberarCliente(TcpClient1, networkStreamClient1);
-                    LiberarCliente(TcpClient2, networkStreamClient2);
+                    foreach (Cliente cliente in clientesInterfaz)
+                    {
+                        LiberarCliente(cliente.clienteTCP, cliente.stream);
+                    }
+                    
                     if (SeRecibieronDatos != null)
                         SeRecibieronDatos.Invoke("Error");
                     throw;
