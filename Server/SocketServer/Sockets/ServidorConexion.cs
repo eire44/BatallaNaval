@@ -31,6 +31,9 @@ namespace Sockets
 
         public delegate void SeRecibieronDatosEventHandler(string pDatos);
 
+
+        BLMetodos bl = new BLMetodos();
+
         public string[] ObtenerDireccionesLocales()
         {
             var mDireccionesIP = Dns.GetHostAddresses(Dns.GetHostName());
@@ -101,7 +104,7 @@ namespace Sockets
                     //SeConectoCliente.Invoke(TcpClient.Available.ToString());
                     foreach (Cliente cliente in clientesInterfaz)
                     {
-                        if (cliente.clienteTCP.Available > 0 && inicializacion)
+                        if (cliente.clienteTCP.Available > 0)
                         {
                             var mBytes = new byte[cliente.clienteTCP.ReceiveBufferSize + 1];
                             int bytesRead;
@@ -119,14 +122,20 @@ namespace Sockets
                             string mDatosRecibidos = Encoding.UTF8.GetString(mBytes, 0, bytesRead);
 
                             List<Datos> objetoRecibido = JsonConvert.DeserializeObject<List<Datos>>(mDatosRecibidos);
+                            
+                            if(inicializacion)
+                            {
+                                bl.pasarAInsertar(objetoRecibido);
+                            }
 
-                            SeRecibieronDatos.Invoke(objetoRecibido[0].x.ToString());
+
+                            //SeRecibieronDatos.Invoke(objetoRecibido[0].x.ToString());
                         }
 
-                        EnviarMensaje(cliente.clienteTCP, "");
+                        EnviarMensaje(cliente.clienteTCP, "Hola jugador" + cliente.numCliente);
                     }
-
                     inicializacion = false;
+
                 }
 
                 //LiberarCliente();

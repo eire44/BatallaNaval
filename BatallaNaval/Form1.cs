@@ -26,6 +26,8 @@ namespace BatallaNaval
             InitializeComponent();
         }
 
+        SocketCliente socket = new SocketCliente();
+
         private void Form1_Load(object sender, EventArgs e)
         {
             #region tablaJugador
@@ -92,12 +94,21 @@ namespace BatallaNaval
 
             btnTerminar.Enabled = false;
 
+            socket.DatosRecibidos += SeRecibieronDatosHandler;
+            //socket.SocketDesconectado += DesconectadoHandlerHandler;
+
             //hiloTerminar = new Thread(confirmarBoton);
             //hiloTerminar.Start();
 
             tiempoTerminar.Start();
         }
         List<Datos> listaDatos = new List<Datos>();
+
+        private void SeRecibieronDatosHandler(string pDatos)
+        {
+            MessageBox.Show(pDatos);
+
+        }
 
         private void btnAgregarLancha_Click(object sender, EventArgs e)
         {
@@ -217,7 +228,6 @@ namespace BatallaNaval
 
         }
 
-        SocketCliente socket = new SocketCliente();
         
 
         bool Comprobacion(int indice)

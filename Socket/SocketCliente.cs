@@ -25,7 +25,7 @@ namespace Socket
 
         public event SeRecibieronDatosEventHandler DatosRecibidos;
 
-        public delegate int[] SeRecibieronDatosEventHandler(int datos);
+        public delegate void SeRecibieronDatosEventHandler(string datos);
 
         public event DesconectadoEventHandler SocketDesconectado;
 
@@ -101,7 +101,7 @@ namespace Socket
 
                             string mDatosRecibidos = Encoding.ASCII.GetString(mBytes);
                             if (DatosRecibidos != null)
-                                DatosRecibidos.Invoke(int.Parse(mDatosRecibidos));
+                                DatosRecibidos.Invoke(mDatosRecibidos);
                         }
 
 

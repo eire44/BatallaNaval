@@ -42,8 +42,7 @@ namespace BL
                     barco = null;
                 }
 
-
-                persistencia.insertarDatos(dato, barco);
+                persistencia.insertarDatos(barco);
             }
         }
         

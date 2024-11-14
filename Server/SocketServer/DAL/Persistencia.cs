@@ -12,9 +12,9 @@ namespace DAL
     public class Persistencia
     {
         SqlConnection conexion = new SqlConnection("Data Source=.;Initial Catalog=DatabaseTest;Integrated Security=True");
-        private static int ID;
+        private int ID;
 
-        public void insertarDatos(Datos dato, BEBarcos barco)
+        public void insertarDatos(BEBarcos barco)
         {
 
             SqlCommand insertar = new SqlCommand("INSERT INTO Barcos (Barco_Id, Barco_Tipo, Barco_Direccion, Barco_Slots, Barco_Vida, Barco_Jugador) VALUES (@pID, @pTipo, @pDireccion,@pSlots, @pVida, @pJugador)", conexion);
@@ -33,21 +33,13 @@ namespace DAL
 
         public int generarId()
         {
-            if (ID < 0)
-            {
                 SqlCommand id = new SqlCommand("SELECT ISNULL(MAX(Barco_Id), 0) FROM Barcos", conexion);
                 conexion.Open();
                 ID = int.Parse(id.ExecuteScalar().ToString());
                 conexion.Close();
-            }
             ID++;
-
             return ID;
         }
 
-        public void insertarDatos()
-        {
-
-        }
     }
 }
