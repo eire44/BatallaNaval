@@ -110,56 +110,81 @@ namespace BatallaNaval
 
         }
 
+
         private void btnAgregarLancha_Click(object sender, EventArgs e)
         {
-            y = int.Parse(dgvJugador.SelectedCells[0].ColumnIndex.ToString());
-            x = int.Parse(dgvJugador.SelectedCells[0].RowIndex.ToString());
-            bool horizontal = chkHorizontal.Checked;
-
-
-            if (dgvJugador.Rows[x].Cells[y].Style.BackColor != Color.Gray)
+            try
             {
-                dgvJugador.Rows[x].Cells[y].Style.BackColor = Color.Gray;
+                if(dgvJugador.SelectedCells.Count == 0)
+                {
+                    throw new CellSelectionException("Seleccione una coordenada de la grilla.");
+                } 
+                else
+                {
+                    x = int.Parse(dgvJugador.SelectedCells[0].ColumnIndex.ToString());
+                    y = int.Parse(dgvJugador.SelectedCells[0].RowIndex.ToString());
+                    bool horizontal = chkHorizontal.Checked;
 
-                btnAgregarLancha.Enabled = false;
 
-                Datos datos = new Datos();
-                datos.x = x;
-                datos.y = y;
-                datos.horizontal = horizontal;
-                datos.idBarco = 3;
+                    if (dgvJugador.Rows[y].Cells[x].Style.BackColor != Color.Gray)
+                    {
+                        dgvJugador.Rows[y].Cells[x].Style.BackColor = Color.Gray;
 
-                listaDatos.Add(datos);
+                        btnAgregarLancha.Enabled = false;
 
+                        Datos datos = new Datos();
+                        datos.x = x;
+                        datos.y = y;
+                        datos.horizontal = horizontal;
+                        datos.idBarco = 3;
+
+                        listaDatos.Add(datos);
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se puede colocar el barco.");
+                    }
+                }
                 
-
             }
-            else
+            catch (CellSelectionException ex)
             {
-                MessageBox.Show("No se puede colocar el barco.");
+                MessageBox.Show(ex.Message);
             }
-
         }
 
         private void btnDestructor_Click(object sender, EventArgs e)
         {
-            y = int.Parse(dgvJugador.SelectedCells[0].ColumnIndex.ToString());
-            x = int.Parse(dgvJugador.SelectedCells[0].RowIndex.ToString());
-            bool horizontal = chkHorizontal.Checked;
-
-
-            if (Comprobacion(2))
+            try
             {
-                btnDestructor.Enabled = false;
+                if (dgvJugador.SelectedCells.Count == 0)
+                {
+                    throw new CellSelectionException("Seleccione una coordenada de la grilla.");
+                }
+                x = int.Parse(dgvJugador.SelectedCells[0].ColumnIndex.ToString());
+                y = int.Parse(dgvJugador.SelectedCells[0].RowIndex.ToString());
+                bool horizontal = chkHorizontal.Checked;
 
-                Datos datos = new Datos();
-                datos.x = x;
-                datos.y = y;
-                datos.horizontal = horizontal;
-                datos.idBarco = 2;
 
-                listaDatos.Add(datos);
+                if (Comprobacion(2))
+                {
+                    btnDestructor.Enabled = false;
+
+                    Datos datos = new Datos();
+                    datos.x = x;
+                    datos.y = y;
+                    datos.horizontal = horizontal;
+                    datos.idBarco = 2;
+
+                    listaDatos.Add(datos);
+                }
             }
+            catch (CellSelectionException ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+            
 
         }
 
@@ -181,43 +206,69 @@ namespace BatallaNaval
 
         private void btnAcorazado_Click(object sender, EventArgs e)
         {
-            y = int.Parse(dgvJugador.SelectedCells[0].ColumnIndex.ToString());
-            x = int.Parse(dgvJugador.SelectedCells[0].RowIndex.ToString());
-            bool horizontal = chkHorizontal.Checked;
-
-            if(Comprobacion(3))
+            try
             {
-                btnAcorazado.Enabled = false;
+                if (dgvJugador.SelectedCells.Count == 0)
+                {
+                    throw new CellSelectionException("Seleccione una coordenada de la grilla.");
+                }
 
-                Datos datos = new Datos();
-                datos.x = x;
-                datos.y = y;
-                datos.horizontal = horizontal;
-                datos.idBarco = 1;
+                x = int.Parse(dgvJugador.SelectedCells[0].ColumnIndex.ToString());
+                y = int.Parse(dgvJugador.SelectedCells[0].RowIndex.ToString());
+                bool horizontal = chkHorizontal.Checked;
 
-                listaDatos.Add(datos);
+                if (Comprobacion(3))
+                {
+                    btnAcorazado.Enabled = false;
+
+                    Datos datos = new Datos();
+                    datos.x = x;
+                    datos.y = y;
+                    datos.horizontal = horizontal;
+                    datos.idBarco = 1;
+
+                    listaDatos.Add(datos);
+                }
             }
+            catch (CellSelectionException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
 
         private void btnPortaviones_Click(object sender, EventArgs e)
         {
-            y = int.Parse(dgvJugador.SelectedCells[0].ColumnIndex.ToString());
-            x = int.Parse(dgvJugador.SelectedCells[0].RowIndex.ToString());
-            bool horizontal = chkHorizontal.Checked;
-
-
-            if (Comprobacion(4))
+            try
             {
-                btnPortaviones.Enabled = false;
+                if (dgvJugador.SelectedCells.Count == 0)
+                {
+                    throw new CellSelectionException("Seleccione una coordenada de la grilla.");
+                }
 
-                Datos datos = new Datos();
-                datos.x = x;
-                datos.y = y;
-                datos.horizontal = horizontal;
-                datos.idBarco = 0;
+                x = int.Parse(dgvJugador.SelectedCells[0].ColumnIndex.ToString());
+                y = int.Parse(dgvJugador.SelectedCells[0].RowIndex.ToString());
+                bool horizontal = chkHorizontal.Checked;
 
-                listaDatos.Add(datos);
+
+                if (Comprobacion(4))
+                {
+                    btnPortaviones.Enabled = false;
+
+                    Datos datos = new Datos();
+                    datos.x = x;
+                    datos.y = y;
+                    datos.horizontal = horizontal;
+                    datos.idBarco = 0;
+
+                    listaDatos.Add(datos);
+                }
             }
+            catch (CellSelectionException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
 
         private void dgvEnemigo_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -240,14 +291,14 @@ namespace BatallaNaval
                 {
                     if (!chkHorizontal.Checked && valido)
                     {
-                        if (dgvJugador.Rows[x + i].Cells[y].Style.BackColor == Color.Gray)
+                        if (dgvJugador.Rows[y + i].Cells[x].Style.BackColor == Color.Gray)
                         {
                             valido = false;
                         }
                     }
                     else if (valido)
                     {
-                        if (dgvJugador.Rows[x].Cells[y + i].Style.BackColor == Color.Gray)
+                        if (dgvJugador.Rows[y].Cells[x + i].Style.BackColor == Color.Gray)
                         {
                             valido = false;
                         }
@@ -260,11 +311,11 @@ namespace BatallaNaval
                     {
                         if (!chkHorizontal.Checked && valido)
                         {
-                            dgvJugador.Rows[x + i].Cells[y].Style.BackColor = Color.Gray;
+                            dgvJugador.Rows[y + i].Cells[x].Style.BackColor = Color.Gray;
                         }
                         else if (valido)
                         {
-                            dgvJugador.Rows[x].Cells[y + i].Style.BackColor = Color.Gray;
+                            dgvJugador.Rows[y].Cells[x + i].Style.BackColor = Color.Gray;
                         }
                     }
 

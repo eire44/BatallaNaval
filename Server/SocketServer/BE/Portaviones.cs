@@ -8,27 +8,32 @@ namespace BE
 {
     public class Portaviones : BEBarcos
     {
-        public int coordenadaX1 { get; set; }
-        public int coordenadaX2 { get; set; }
-        public int coordenadaX3 { get; set; }
-        public int coordenadaX4 { get; set; }
-
-        public int coordenadaY1 { get; set; }
-        public int coordenadaY2 { get; set; }
-        public int coordenadaY3 { get; set; }
-        public int coordenadaY4 { get; set; }
-
-        public Portaviones(bool direccion, int coordenadaX, int coordenadaY) 
+        public Portaviones(bool direccion, int coordenadaX, int coordenadaY)
         {
             Nombre = "Portaviones";
-            Slots = 4;
             Id = 0;
-            CoordenadaX = coordenadaX;
-            CoordenadaY = coordenadaY;
             Horizontal = direccion;
-            Vidas = Slots;
+            Vidas = 4;
+            CoordenadaX = new int[Vidas];
+            CoordenadaY = new int[Vidas];
+            CalcularCoordenadas(coordenadaX, coordenadaY);
         }
-        
 
+        public override void CalcularCoordenadas(int x, int y)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (Horizontal)
+                {
+                    CoordenadaX[i] = x + i;
+                    CoordenadaY[i] = y;
+                }
+                else
+                {
+                    CoordenadaX[i] = x;
+                    CoordenadaY[i] = y + i;
+                }
+            }
+        }
     }
 }

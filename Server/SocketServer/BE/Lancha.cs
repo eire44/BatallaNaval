@@ -11,12 +11,12 @@ namespace BE
         public Lancha(bool direccion, int coordenadaX, int coordenadaY)
         {
             Nombre = "Lancha";
-            Slots = 1;
             Id = 3;
-            CoordenadaX = coordenadaX;
-            CoordenadaY = coordenadaY;
             Horizontal = direccion;
-            Vidas = Slots;
+            Vidas = 1;
+            CoordenadaX = new int[Vidas];
+            CoordenadaY = new int[Vidas];
+            CalcularCoordenadas(coordenadaX, coordenadaY);
         }
     }
 }

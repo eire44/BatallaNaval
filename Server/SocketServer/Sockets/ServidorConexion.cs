@@ -89,6 +89,8 @@ namespace Sockets
                         cliente.stream = cliente.clienteTCP.GetStream();
                         cliente.numCliente = 2;
                         clientesInterfaz.AgregarCliente(cliente);
+
+                        bl.eliminarDatosTabla();
                         break;
                     }
                 }
@@ -122,7 +124,7 @@ namespace Sockets
                             string mDatosRecibidos = Encoding.UTF8.GetString(mBytes, 0, bytesRead);
 
                             List<Datos> objetoRecibido = JsonConvert.DeserializeObject<List<Datos>>(mDatosRecibidos);
-                            
+
                             if(inicializacion)
                             {
                                 bl.pasarAInsertar(objetoRecibido);

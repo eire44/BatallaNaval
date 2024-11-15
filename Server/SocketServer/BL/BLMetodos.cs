@@ -45,6 +45,12 @@ namespace BL
                 persistencia.insertarDatos(barco);
             }
         }
+
+        public void eliminarDatosTabla()
+        {
+            persistencia.eliminarDatos("Coordenadas");
+            persistencia.eliminarDatos("Barcos");
+        }
         
         //public void generarCoordenadas()
         //{

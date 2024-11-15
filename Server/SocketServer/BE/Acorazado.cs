@@ -8,23 +8,33 @@ namespace BE
 {
     public class Acorazado : BEBarcos
     {
-        public int coordenadaX1 { get; set; }
-        public int coordenadaX2 { get; set; }
-        public int coordenadaX3 { get; set; }
-
-        public int coordenadaY1 { get; set; }
-        public int coordenadaY2 { get; set; }
-        public int coordenadaY3 { get; set; }
-
         public Acorazado(bool direccion, int coordenadaX, int coordenadaY)
         {
             Nombre = "Acorazado";
-            Slots = 3;
             Id = 1;
-            CoordenadaX = coordenadaX;
-            CoordenadaY = coordenadaY;
             Horizontal = direccion;
-            Vidas = Slots;
+            Vidas = 3;
+
+            CoordenadaX = new int[Vidas];
+            CoordenadaY = new int[Vidas];
+            CalcularCoordenadas(coordenadaX, coordenadaY);
+        }
+
+        public override void CalcularCoordenadas(int x, int y)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (Horizontal)
+                {
+                    CoordenadaX[i] = x + i;
+                    CoordenadaY[i] = y;
+                }
+                else
+                {
+                    CoordenadaX[i] = x;
+                    CoordenadaY[i] = y + i;
+                }
+            }
         }
     }
 }
