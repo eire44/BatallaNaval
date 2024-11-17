@@ -103,15 +103,16 @@
             this.btnAtacar.TabIndex = 5;
             this.btnAtacar.Text = "Atacar";
             this.btnAtacar.UseVisualStyleBackColor = true;
+            this.btnAtacar.Click += new System.EventHandler(this.btnAtacar_Click);
             // 
             // lblTurno
             // 
             this.lblTurno.AutoSize = true;
-            this.lblTurno.Location = new System.Drawing.Point(912, 62);
+            this.lblTurno.Location = new System.Drawing.Point(938, 62);
             this.lblTurno.Name = "lblTurno";
-            this.lblTurno.Size = new System.Drawing.Size(48, 16);
+            this.lblTurno.Size = new System.Drawing.Size(31, 16);
             this.lblTurno.TabIndex = 6;
-            this.lblTurno.Text = "Turno: ";
+            this.lblTurno.Text = "------";
             // 
             // chkHorizontal
             // 

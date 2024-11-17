@@ -31,6 +31,10 @@ namespace Socket
 
         public delegate void DesconectadoEventHandler();
 
+        public event TurnoEventHandler tuTurno;
+
+        public delegate void TurnoEventHandler();
+
         public bool Conectar()
         {
             if (TcpClient== null)
@@ -100,12 +104,16 @@ namespace Socket
                             }
 
                             string mDatosRecibidos = Encoding.ASCII.GetString(mBytes);
-                            if (DatosRecibidos != null)
-                                DatosRecibidos.Invoke(mDatosRecibidos);
+                            if (mDatosRecibidos.Contains("Tu turno"))
+                            {
+                                tuTurno.Invoke();
+                            }
+                            else
+                            {
+                                if (DatosRecibidos != null)
+                                    DatosRecibidos.Invoke(mDatosRecibidos);
+                            }
                         }
-
-
-
 
                     }
                     if (SocketDesconectado != null)
@@ -126,6 +134,18 @@ namespace Socket
             }
         }
 
+        #region Metodo de envio
+
+        public void EnviarMensaje(Datos mensaje)
+        {
+            if (NetworkStream != null && NetworkStream.CanWrite)
+            {
+                string serializacion = JsonConvert.SerializeObject(mensaje, Formatting.Indented);
+                byte[] datos = Encoding.ASCII.GetBytes(serializacion);
+                NetworkStream.Write(datos, 0, datos.Length);
+            }
+        }
+
         public void EnviarMensaje(string mensaje)
         {
             if (NetworkStream != null && NetworkStream.CanWrite)
@@ -134,6 +154,8 @@ namespace Socket
                 NetworkStream.Write(datos, 0, datos.Length);
             }
         }
+
+        #endregion
 
 
         public void LiberarTodo()

@@ -95,11 +95,13 @@ namespace BatallaNaval
             btnTerminar.Enabled = false;
 
             socket.DatosRecibidos += SeRecibieronDatosHandler;
+            socket.tuTurno += activarTurno;
             //socket.SocketDesconectado += DesconectadoHandlerHandler;
 
             //hiloTerminar = new Thread(confirmarBoton);
             //hiloTerminar.Start();
 
+            btnAtacar.Enabled = false;
             tiempoTerminar.Start();
         }
         List<Datos> listaDatos = new List<Datos>();
@@ -107,6 +109,24 @@ namespace BatallaNaval
         private void SeRecibieronDatosHandler(string pDatos)
         {
             MessageBox.Show(pDatos);
+        }
+
+        private void activarTurno()
+        {
+            ActualizarTextBox();
+
+        }
+
+        delegate void ActualizarBotonDelegate();
+        void ActualizarTextBox()
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke(new ActualizarBotonDelegate(ActualizarTextBox));
+                return;
+            }
+            btnAtacar.Enabled = true;
+            lblTurno.Text = "Tu turno";
 
         }
 
@@ -321,7 +341,6 @@ namespace BatallaNaval
 
 
                     indiceTerminar++;
-                    lblTurno.Text = indiceTerminar.ToString();
                 }
                 else
                 {
@@ -358,6 +377,39 @@ namespace BatallaNaval
                     && btnAgregarLancha.Enabled == false && txtIP.Text != "" && txtPuerto.Text != "")
             {
                 btnTerminar.Enabled = true;
+            }
+        }
+
+        private void btnAtacar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dgvEnemigo.SelectedCells.Count == 0)
+                {
+                    throw new CellSelectionException("Seleccione una coordenada de la grilla.");
+                }
+                
+                if (dgvEnemigo.Rows[y].Cells[x].Style.BackColor != Color.DarkBlue || dgvEnemigo.Rows[y].Cells[x].Style.BackColor != Color.DarkRed)
+                {
+                    dgvJugador.Rows[y].Cells[x].Style.BackColor = Color.DarkBlue; //modificar segun si es tocado o no
+                    lblTurno.Text = "Esperando turno";
+                    btnAtacar.Enabled = false;
+
+                    x = int.Parse(dgvEnemigo.SelectedCells[0].ColumnIndex.ToString());
+                    y = int.Parse(dgvEnemigo.SelectedCells[0].RowIndex.ToString());
+                    Datos datos = new Datos();
+                    datos.x = x;
+                    datos.y = y;
+                    socket.EnviarMensaje(datos);
+                }
+                else
+                {
+                    MessageBox.Show("No se puede colocar el barco.");
+                }
+            }
+            catch (CellSelectionException ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
