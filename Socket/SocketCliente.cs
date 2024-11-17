@@ -22,6 +22,8 @@ namespace Socket
         public bool writeOnce = false;
         public bool onlySend = false;
         string fileJSON = "Barco.json";
+        private int numJugador;
+        private bool partidaComenzada;
 
         public event SeRecibieronDatosEventHandler DatosRecibidos;
 
@@ -34,6 +36,10 @@ namespace Socket
         public event TurnoEventHandler tuTurno;
 
         public delegate void TurnoEventHandler();
+
+        public event ActualizarGrillaEventHandler grillaAtacada;
+
+        public delegate void ActualizarGrillaEventHandler(Datos dato, int jugador);
 
         public bool Conectar()
         {
@@ -110,8 +116,23 @@ namespace Socket
                             }
                             else
                             {
-                                if (DatosRecibidos != null)
+                                if (!partidaComenzada)
+                                {
+                                    if (mDatosRecibidos.Contains("Hola jugador 1"))
+                                    {
+                                        numJugador = 1;
+                                    } else
+                                    {
+                                        numJugador = 2;
+                                    }
                                     DatosRecibidos.Invoke(mDatosRecibidos);
+                                    partidaComenzada = true;
+                                }
+                                else
+                                {
+                                    Datos objetoRecibido = JsonConvert.DeserializeObject<Datos>(mDatosRecibidos);
+                                    grillaAtacada.Invoke(objetoRecibido, numJugador);
+                                }
                             }
                         }
 

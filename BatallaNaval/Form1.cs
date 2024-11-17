@@ -96,6 +96,7 @@ namespace BatallaNaval
 
             socket.DatosRecibidos += SeRecibieronDatosHandler;
             socket.tuTurno += activarTurno;
+            socket.grillaAtacada += actualizarGrilla;
             //socket.SocketDesconectado += DesconectadoHandlerHandler;
 
             //hiloTerminar = new Thread(confirmarBoton);
@@ -105,6 +106,40 @@ namespace BatallaNaval
             tiempoTerminar.Start();
         }
         List<Datos> listaDatos = new List<Datos>();
+
+        private void actualizarGrilla(Datos dato, int jugador)
+        {
+            if(dato.jugador == jugador)
+            {
+                if(dato.estado == "Agua")
+                {
+                    dgvEnemigo.Rows[dato.y].Cells[dato.x].Style.BackColor = Color.DarkBlue;
+                } else if(dato.estado == "Tocado")
+                {
+                    dgvEnemigo.Rows[dato.y].Cells[dato.x].Style.BackColor = Color.DarkRed;
+                } else if(dato.estado == "Hundido")
+                {
+                    dgvEnemigo.Rows[dato.y].Cells[dato.x].Style.BackColor = Color.DarkRed;
+                }
+            } 
+            else
+            {
+                if (dato.estado == "Agua")
+                {
+                    dgvJugador.Rows[dato.y].Cells[dato.x].Style.BackColor = Color.DarkBlue;
+                }
+                else if (dato.estado == "Tocado")
+                {
+                    dgvJugador.Rows[dato.y].Cells[dato.x].Style.BackColor = Color.DarkRed;
+                }
+                else if (dato.estado == "Hundido")
+                {
+                    dgvJugador.Rows[dato.y].Cells[dato.x].Style.BackColor = Color.DarkRed;
+                }
+            }
+
+            MessageBox.Show(dato.estado + "del jugador " + dato.jugador);
+        }
 
         private void SeRecibieronDatosHandler(string pDatos)
         {
@@ -377,6 +412,7 @@ namespace BatallaNaval
                     && btnAgregarLancha.Enabled == false && txtIP.Text != "" && txtPuerto.Text != "")
             {
                 btnTerminar.Enabled = true;
+                tiempoTerminar.Stop();
             }
         }
 
@@ -391,7 +427,7 @@ namespace BatallaNaval
                 
                 if (dgvEnemigo.Rows[y].Cells[x].Style.BackColor != Color.DarkBlue || dgvEnemigo.Rows[y].Cells[x].Style.BackColor != Color.DarkRed)
                 {
-                    dgvJugador.Rows[y].Cells[x].Style.BackColor = Color.DarkBlue; //modificar segun si es tocado o no
+                    //dgvEnemigo.Rows[y].Cells[x].Style.BackColor = Color.DarkBlue; //modificar segun si es tocado o no
                     lblTurno.Text = "Esperando turno";
                     btnAtacar.Enabled = false;
 
@@ -417,6 +453,9 @@ namespace BatallaNaval
         {
             setIPAndPort();
             socket.generarJSON(listaDatos);
+            dgvJugador.ClearSelection();
+            dgvJugador.Enabled = false;
+            btnTerminar.Enabled = false;
         }
     }
 }

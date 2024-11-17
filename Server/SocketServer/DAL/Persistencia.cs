@@ -55,17 +55,73 @@ namespace DAL
         {
             for (int i = 0; i < barco.Vidas; i++)
             {
-                SqlCommand insertar = new SqlCommand("INSERT INTO Coordenadas (Coor_Id, Barco_Id, Coor_X, Coor_Y) VALUES (@pCoorID, @pBarcoId, @pCoorX, @pCoorY)", conexion);
+                SqlCommand insertar = new SqlCommand("INSERT INTO Coordenadas (Coor_Id, Barco_Id, Coor_X, Coor_Y, Coor_Jugador) VALUES (@pCoorID, @pBarcoId, @pCoorX, @pCoorY, @pCoorJug)", conexion);
                 insertar.Parameters.AddWithValue("@pCoorID", generarId("Coor_Id", "Coordenadas"));
                 insertar.Parameters.AddWithValue("@pBarcoId", generarId("Barco_Id", "Barcos") - 1);
 
                 insertar.Parameters.AddWithValue("@pCoorX", barco.CoordenadaX[i]);
                 insertar.Parameters.AddWithValue("@pCoorY", barco.CoordenadaY[i]);
+
+                insertar.Parameters.AddWithValue("@pCoorJug", barco.Jugador);
                 conexion.Open();
                 insertar.ExecuteNonQuery();
                 conexion.Close();
 
             }
+        }
+
+        public Datos compararCoordenadas(Datos dato)
+        {
+            int coorId = 0;
+            int barcoId = 0;
+            int barcoVida = 0;
+            SqlCommand contains = new SqlCommand("SELECT Coor_Id, Barco_Id FROM Coordenadas WHERE Coor_X = " + dato.x + "AND Coor_Y = " + dato.y + " AND Coor_Jugador = " + dato.jugador, conexion);
+            conexion.Open();
+            SqlDataReader readerCoor = contains.ExecuteReader();
+            
+            while (readerCoor.Read())
+            {
+                coorId = readerCoor.GetInt32(0);
+                barcoId = readerCoor.GetInt32(1);
+            }
+            readerCoor.Close();
+            if (coorId !=  0)
+            {
+                SqlCommand borrarCoor = new SqlCommand("DELETE FROM Coordenadas WHERE Coor_Id = " + coorId, conexion);
+                borrarCoor.ExecuteNonQuery();
+            }
+            if(barcoId != 0)
+            {
+                SqlCommand confirmarVida = new SqlCommand("SELECT Barco_Vida FROM Barcos WHERE Barco_Id = " + barcoId, conexion);
+                SqlDataReader readerBarco = contains.ExecuteReader();
+
+                while (readerBarco.Read())
+                {
+                    barcoVida = readerBarco.GetInt32(0);
+                }
+                readerBarco.Close();
+                barcoVida -= 1;
+                if(barcoVida == 0)
+                {
+                    dato.estado = "Hundido";
+                    SqlCommand borrarBarco = new SqlCommand("DELETE FROM Barcos WHERE Barco_Id = " + barcoId, conexion);
+                    borrarBarco.ExecuteNonQuery();
+                } else
+                {
+                    dato.estado = "Tocado";
+                    SqlCommand borrarBarco = new SqlCommand("UPDATE Barcos SET Barco_Vida = " + barcoVida + " WHERE Barco_Id = " + barcoId, conexion);
+                    borrarBarco.ExecuteNonQuery();
+                }
+
+            }
+
+            if(coorId == 0 && barcoId == 0)
+            {
+                dato.estado = "Agua";
+            }
+            conexion.Close();
+
+            return dato;
         }
     }
 }

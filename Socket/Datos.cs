@@ -13,5 +13,6 @@ namespace Socket
         public bool horizontal;
         public int idBarco;
         public string estado;
+        public int jugador;
     }
 }

@@ -51,6 +51,11 @@ namespace BL
             persistencia.eliminarDatos("Coordenadas");
             persistencia.eliminarDatos("Barcos");
         }
+
+        public Datos comprobarCoordenadas(Datos datos)
+        {
+            return persistencia.compararCoordenadas(datos);
+        }
         
         //public void generarCoordenadas()
         //{

@@ -13,5 +13,6 @@ namespace BE
         public bool horizontal;
         public string estado;
         public int idBarco;
+        public int jugador;
     }
 }

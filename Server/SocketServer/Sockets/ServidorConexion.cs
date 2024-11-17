@@ -105,8 +105,23 @@ namespace Sockets
                     //}
 
                     //SeConectoCliente.Invoke(TcpClient.Available.ToString());
+                    if (File.Exists("Datos.json"))
+                    {
+                        File.Delete("Datos.json");
+                    }
+
+
                     foreach (Cliente cliente in clientesInterfaz)
                     {
+
+                        if (jugador == cliente.numCliente && autorizarJugador)
+                        {
+                            cliente.esperandoTurno = !cliente.esperandoTurno;
+                            autorizarJugador = false;
+                            EnviarMensaje(cliente.clienteTCP, "Tu turno");
+                        }
+
+
                         if (cliente.clienteTCP.Available > 0)
                         {
                             var mBytes = new byte[cliente.clienteTCP.ReceiveBufferSize + 1];
@@ -128,15 +143,18 @@ namespace Sockets
 
                         }
 
-                        if (jugador == cliente.numCliente && autorizarJugador)
-                        {
-                            cliente.esperandoTurno = !cliente.esperandoTurno;
-                            autorizarJugador = false;
-                            EnviarMensaje(cliente.clienteTCP, "Tu turno");
-                            //mandar mensaje de turno
-                        }
 
                     }
+
+                    if (File.Exists("Datos.json"))
+                    {
+                        foreach (Cliente cliente in clientesInterfaz)
+                        {
+                            string datoEstado = File.ReadAllText("Datos.json", Encoding.UTF8);
+                            EnviarMensaje(cliente.clienteTCP, datoEstado);
+                        }
+                    }
+
                     inicializacion = false;
 
                 }
@@ -193,19 +211,29 @@ namespace Sockets
 
         void ConexionLogicaDeJuego(Cliente cliente, string mDatosRecibidos)
         {
+
             if (inicializacion)
             {
                 List<Datos> objetoRecibido = JsonConvert.DeserializeObject<List<Datos>>(mDatosRecibidos);
                 bl.pasarAInsertar(objetoRecibido);
-                EnviarMensaje(cliente.clienteTCP, "Hola jugador" + cliente.numCliente);
+                EnviarMensaje(cliente.clienteTCP, "Hola jugador " + cliente.numCliente);
                 if (cliente.numCliente == 1)
                 {
-                    EnviarMensaje(cliente.clienteTCP, "Tu turno");
-                    cliente.esperandoTurno = true;
+                    jugador = 1;
+                    autorizarJugador = true;
                 }
             }
             else
             {
+                Datos objetoRecibido = JsonConvert.DeserializeObject<Datos>(mDatosRecibidos);
+                Datos dato = bl.comprobarCoordenadas(objetoRecibido);
+                dato.jugador = jugador;
+
+                string mJson = JsonConvert.SerializeObject(dato, Formatting.Indented);
+
+                File.WriteAllText("Datos.json", mJson);
+                autorizarJugador = true;
+
                 if (cliente.numCliente == 1 && cliente.esperandoTurno)
                 {
                     jugador = 2;
@@ -216,8 +244,7 @@ namespace Sockets
                     jugador = 1;
                     cliente.esperandoTurno = false;
                 }
-                //Enviar mensaje de info de partida
-                autorizarJugador = true;
+                
             }
         }
 
