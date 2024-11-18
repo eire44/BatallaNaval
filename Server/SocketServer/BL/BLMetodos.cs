@@ -15,7 +15,7 @@ namespace BL
         public delegate void retornarInfoAUI(string s);
         public event retornarInfoAUI RetornarAUI;
 
-        public void pasarAInsertar(List<Datos> datos)
+        public void pasarAInsertar(List<Datos> datos, int jugador)
         {
             foreach (Datos dato in datos)
             {
@@ -41,7 +41,7 @@ namespace BL
                 {
                     barco = null;
                 }
-
+                barco.Jugador = jugador;
                 persistencia.insertarDatos(barco);
             }
         }
@@ -56,20 +56,5 @@ namespace BL
         {
             return persistencia.compararCoordenadas(datos);
         }
-        
-        //public void generarCoordenadas()
-        //{
-        //    for (int i = 0; i < indice; i++)
-        //    {
-        //        if (!chkHorizontal.Checked && valido)
-        //        {
-        //            dgvJugador.Rows[x + i].Cells[y].Style.BackColor = Color.Gray;
-        //        }
-        //        else if (valido)
-        //        {
-        //            dgvJugador.Rows[x].Cells[y + i].Style.BackColor = Color.Gray;
-        //        }
-        //    }
-        //}
     }
 }

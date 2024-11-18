@@ -50,7 +50,6 @@
     <Compile Include="ClientesConectados.cs" />
     <Compile Include="Datos.cs" />
     <Compile Include="Destructor.cs" />
-    <Compile Include="Flota.cs" />
     <Compile Include="Lancha.cs" />
     <Compile Include="Portaviones.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

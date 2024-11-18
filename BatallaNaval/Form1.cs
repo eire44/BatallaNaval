@@ -97,7 +97,6 @@ namespace BatallaNaval
             socket.DatosRecibidos += SeRecibieronDatosHandler;
             socket.tuTurno += activarTurno;
             socket.grillaAtacada += actualizarGrilla;
-            //socket.SocketDesconectado += DesconectadoHandlerHandler;
 
             //hiloTerminar = new Thread(confirmarBoton);
             //hiloTerminar.Start();
@@ -138,7 +137,17 @@ namespace BatallaNaval
                 }
             }
 
-            MessageBox.Show(dato.estado + "del jugador " + dato.jugador);
+            if (dato.perdiste[2 - jugador])
+            {
+                MessageBox.Show("Ganaste");
+                socket.LiberarTodo();
+            }
+            else if (dato.perdiste[jugador - 1])
+            {
+                MessageBox.Show("Perdiste");
+                socket.LiberarTodo();
+            }
+
         }
 
         private void SeRecibieronDatosHandler(string pDatos)

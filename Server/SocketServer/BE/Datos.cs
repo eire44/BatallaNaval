@@ -14,5 +14,6 @@ namespace BE
         public string estado;
         public int idBarco;
         public int jugador;
+        public bool[] perdiste = new bool[2];
     }
 }

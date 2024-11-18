@@ -35,6 +35,15 @@ namespace Sockets
 
         BLMetodos bl = new BLMetodos();
 
+        int[] barcosRestantes = new int[2];
+
+        public ServidorConexion()
+        {
+            barcosRestantes[0] = 4;
+            barcosRestantes[1] = 4;
+        }
+
+
         public string[] ObtenerDireccionesLocales()
         {
             var mDireccionesIP = Dns.GetHostAddresses(Dns.GetHostName());
@@ -98,13 +107,7 @@ namespace Sockets
 
                 while (true)
                 {
-                    //if (networkStream == null | TcpClient1.Connected == false | !networkStream.CanRead)
-                    //{
-                    //    SeConectoCliente.Invoke("AAAA algo salió mal :((((");
-                    //    break;
-                    //}
-
-                    //SeConectoCliente.Invoke(TcpClient.Available.ToString());
+                    
                     if (File.Exists("Datos.json"))
                     {
                         File.Delete("Datos.json");
@@ -152,16 +155,20 @@ namespace Sockets
                         {
                             string datoEstado = File.ReadAllText("Datos.json", Encoding.UTF8);
                             EnviarMensaje(cliente.clienteTCP, datoEstado);
+
+                            for (int i = 0; i < barcosRestantes.Length; i++)
+                            {
+                                if (barcosRestantes[i] == 0)
+                                {
+                                    LiberarCliente(cliente.clienteTCP, cliente.stream);
+                                }
+                            }
                         }
                     }
 
                     inicializacion = false;
 
                 }
-
-                //LiberarCliente();
-                //if (SeDesconectoCliente != null)
-                //    SeDesconectoCliente.Invoke();
 
             }
             catch
@@ -175,7 +182,6 @@ namespace Sockets
                     
                     if (SeRecibieronDatos != null)
                         SeRecibieronDatos.Invoke("Error");
-                    throw;
                 }
             }
         }
@@ -194,19 +200,6 @@ namespace Sockets
                 }
             }
         }
-        public void EnviarMensaje(TcpClient cliente, Datos mensaje)
-        {
-            if (cliente != null && cliente.Connected)
-            {
-                NetworkStream stream = cliente.GetStream();
-                if (stream.CanWrite)
-                {
-                    string serializacion = JsonConvert.SerializeObject(mensaje, Formatting.Indented);
-                    byte[] datos = Encoding.ASCII.GetBytes(serializacion);
-                    stream.Write(datos, 0, datos.Length);
-                }
-            }
-        }
         #endregion
 
         void ConexionLogicaDeJuego(Cliente cliente, string mDatosRecibidos)
@@ -215,7 +208,7 @@ namespace Sockets
             if (inicializacion)
             {
                 List<Datos> objetoRecibido = JsonConvert.DeserializeObject<List<Datos>>(mDatosRecibidos);
-                bl.pasarAInsertar(objetoRecibido);
+                bl.pasarAInsertar(objetoRecibido, cliente.numCliente);
                 EnviarMensaje(cliente.clienteTCP, "Hola jugador " + cliente.numCliente);
                 if (cliente.numCliente == 1)
                 {
@@ -228,6 +221,16 @@ namespace Sockets
                 Datos objetoRecibido = JsonConvert.DeserializeObject<Datos>(mDatosRecibidos);
                 Datos dato = bl.comprobarCoordenadas(objetoRecibido);
                 dato.jugador = jugador;
+
+                if (dato.estado == "Hundido")
+                {
+                    barcosRestantes[2 - jugador]--;
+
+                    if (barcosRestantes[2 - jugador] <= 0)
+                    {
+                        dato.perdiste[2 - jugador] = true;
+                    }
+                }
 
                 string mJson = JsonConvert.SerializeObject(dato, Formatting.Indented);
 
@@ -253,7 +256,7 @@ namespace Sockets
         {
             if (cliente != null)
             {
-                SeRecibieronDatos.Invoke("Se libero el cliente");
+                SeRecibieronDatos.Invoke("Se liberó el cliente");
                 if (networkStream != null)
                 {
                     networkStream.Close();

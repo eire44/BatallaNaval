@@ -93,7 +93,7 @@ namespace DAL
             if(barcoId != 0)
             {
                 SqlCommand confirmarVida = new SqlCommand("SELECT Barco_Vida FROM Barcos WHERE Barco_Id = " + barcoId, conexion);
-                SqlDataReader readerBarco = contains.ExecuteReader();
+                SqlDataReader readerBarco = confirmarVida.ExecuteReader();
 
                 while (readerBarco.Read())
                 {
@@ -101,7 +101,7 @@ namespace DAL
                 }
                 readerBarco.Close();
                 barcoVida -= 1;
-                if(barcoVida == 0)
+                if(barcoVida <= 0)
                 {
                     dato.estado = "Hundido";
                     SqlCommand borrarBarco = new SqlCommand("DELETE FROM Barcos WHERE Barco_Id = " + barcoId, conexion);

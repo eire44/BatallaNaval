@@ -29,10 +29,6 @@ namespace Socket
 
         public delegate void SeRecibieronDatosEventHandler(string datos);
 
-        public event DesconectadoEventHandler SocketDesconectado;
-
-        public delegate void DesconectadoEventHandler();
-
         public event TurnoEventHandler tuTurno;
 
         public delegate void TurnoEventHandler();
@@ -85,7 +81,7 @@ namespace Socket
                 {
                     while(true)
                     {
-                        NetworkStream = TcpClient.GetStream(); //porque obtiene otra vez el stream?
+                        NetworkStream = TcpClient.GetStream();
                         if (NetworkStream == null | TcpClient.Connected == false | !NetworkStream.CanRead)
                         {
                             break;
@@ -137,8 +133,6 @@ namespace Socket
                         }
 
                     }
-                    if (SocketDesconectado != null)
-                        SocketDesconectado.Invoke();
                     LiberarTodo();
 
 
@@ -146,10 +140,8 @@ namespace Socket
             }
             catch (Exception)
             {
-                if (thread != null && thread.ThreadState == System.Threading.ThreadState.Running)
+                if (thread != null && thread.ThreadState == ThreadState.Running)
                 {
-                    if (SocketDesconectado != null)
-                        SocketDesconectado.Invoke();
                     LiberarTodo();
                 }
             }
@@ -161,17 +153,9 @@ namespace Socket
         {
             if (NetworkStream != null && NetworkStream.CanWrite)
             {
+                mensaje.jugador = 3 - numJugador;
                 string serializacion = JsonConvert.SerializeObject(mensaje, Formatting.Indented);
                 byte[] datos = Encoding.ASCII.GetBytes(serializacion);
-                NetworkStream.Write(datos, 0, datos.Length);
-            }
-        }
-
-        public void EnviarMensaje(string mensaje)
-        {
-            if (NetworkStream != null && NetworkStream.CanWrite)
-            {
-                byte[] datos = Encoding.ASCII.GetBytes(mensaje);
                 NetworkStream.Write(datos, 0, datos.Length);
             }
         }

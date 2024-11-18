@@ -14,5 +14,6 @@ namespace Socket
         public int idBarco;
         public string estado;
         public int jugador;
+        public bool[] perdiste = new bool[2];
     }
 }
