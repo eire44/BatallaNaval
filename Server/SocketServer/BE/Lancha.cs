@@ -14,8 +14,9 @@ namespace BE
             Id = 3;
             Horizontal = direccion;
             Vidas = 1;
-            CoordenadaX = new int[Vidas];
-            CoordenadaY = new int[Vidas];
+            coordenadas = new Coordenadas(Vidas);
+            //CoordenadaX = new int[Vidas];
+            //CoordenadaY = new int[Vidas];
             CalcularCoordenadas(coordenadaX, coordenadaY);
         }
     }

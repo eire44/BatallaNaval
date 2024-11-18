@@ -19,8 +19,6 @@ namespace BatallaNaval
     {
         int x, y;
         private int indiceTerminar;
-        //private bool c = true;
-        //Thread hiloTerminar;
         public Form1()
         {
             InitializeComponent();
@@ -98,8 +96,6 @@ namespace BatallaNaval
             socket.tuTurno += activarTurno;
             socket.grillaAtacada += actualizarGrilla;
 
-            //hiloTerminar = new Thread(confirmarBoton);
-            //hiloTerminar.Start();
 
             btnAtacar.Enabled = false;
             tiempoTerminar.Start();
@@ -252,22 +248,6 @@ namespace BatallaNaval
 
         }
 
-        //private void confirmarBoton()
-        //{ 
-        //    while(c)
-        //    {
-        //        if (btnAcorazado.Enabled == false && btnDestructor.Enabled == false && btnPortaviones.Enabled == false
-        //            && btnAgregarLancha.Enabled == false && txtIP.Text != "" && txtPuerto.Text != "")
-        //        {
-        //            btnTerminar.Enabled = true;
-        //            c = false;
-        //            hiloTerminar.Abort();
-        //            hiloTerminar = null;
-        //        }
-        //    }
-            
-        //}
-
         private void btnAcorazado_Click(object sender, EventArgs e)
         {
             try
@@ -342,8 +322,6 @@ namespace BatallaNaval
             lblCoordeanadas.Text = "Coordenadas: " + dgvEnemigo.Columns[y].Name + ", " + (x + 1).ToString();
 
         }
-
-        
 
         bool Comprobacion(int indice)
         {
@@ -436,7 +414,6 @@ namespace BatallaNaval
                 
                 if (dgvEnemigo.Rows[y].Cells[x].Style.BackColor != Color.DarkBlue || dgvEnemigo.Rows[y].Cells[x].Style.BackColor != Color.DarkRed)
                 {
-                    //dgvEnemigo.Rows[y].Cells[x].Style.BackColor = Color.DarkBlue; //modificar segun si es tocado o no
                     lblTurno.Text = "Esperando turno";
                     btnAtacar.Enabled = false;
 

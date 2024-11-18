@@ -17,10 +17,9 @@ namespace DAL
         public void insertarDatos(BEBarcos barco)
         {
 
-            SqlCommand insertar = new SqlCommand("INSERT INTO Barcos (Barco_Id, Barco_Tipo, Barco_Direccion, Barco_Vida, Barco_Jugador) VALUES (@pID, @pTipo, @pDireccion, @pVida, @pJugador)", conexion);
+            SqlCommand insertar = new SqlCommand("INSERT INTO Barcos (Barco_Id, Barco_Tipo, Barco_Vida, Barco_Jugador) VALUES (@pID, @pTipo, @pVida, @pJugador)", conexion);
             insertar.Parameters.AddWithValue("@pID", generarId("Barco_Id", "Barcos"));
             insertar.Parameters.AddWithValue("@pTipo", barco.Nombre);
-            insertar.Parameters.AddWithValue("@pDireccion", barco.Horizontal);
             insertar.Parameters.AddWithValue("@pVida", barco.Vidas);
             insertar.Parameters.AddWithValue("@pJugador", barco.Jugador);
 
@@ -59,8 +58,8 @@ namespace DAL
                 insertar.Parameters.AddWithValue("@pCoorID", generarId("Coor_Id", "Coordenadas"));
                 insertar.Parameters.AddWithValue("@pBarcoId", generarId("Barco_Id", "Barcos") - 1);
 
-                insertar.Parameters.AddWithValue("@pCoorX", barco.CoordenadaX[i]);
-                insertar.Parameters.AddWithValue("@pCoorY", barco.CoordenadaY[i]);
+                insertar.Parameters.AddWithValue("@pCoorX", barco.devolverX(i));
+                insertar.Parameters.AddWithValue("@pCoorY", barco.devolverY(i));
 
                 insertar.Parameters.AddWithValue("@pCoorJug", barco.Jugador);
                 conexion.Open();

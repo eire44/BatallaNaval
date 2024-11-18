@@ -48,6 +48,7 @@
     <Compile Include="BEBarcos.cs" />
     <Compile Include="Cliente.cs" />
     <Compile Include="ClientesConectados.cs" />
+    <Compile Include="Coordenadas.cs" />
     <Compile Include="Datos.cs" />
     <Compile Include="Destructor.cs" />
     <Compile Include="Lancha.cs" />

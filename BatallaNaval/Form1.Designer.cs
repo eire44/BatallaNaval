@@ -220,7 +220,7 @@
             // tiempoTerminar
             // 
             this.tiempoTerminar.Enabled = true;
-            this.tiempoTerminar.Interval = 1000;
+            this.tiempoTerminar.Interval = 500;
             this.tiempoTerminar.Tick += new System.EventHandler(this.tiempoTerminar_Tick);
             // 
             // Form1

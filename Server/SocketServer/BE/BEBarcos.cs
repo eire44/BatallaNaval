@@ -13,10 +13,8 @@ namespace BE
         public int Id { get; set; }
 
         public bool Horizontal { get; set; }
+        internal Coordenadas coordenadas;
 
-        public int[] CoordenadaX { get; set; }
-
-        public int[] CoordenadaY { get; set; }
 
         public int Vidas { get; set; }
 
@@ -24,8 +22,17 @@ namespace BE
 
         virtual public void CalcularCoordenadas(int x, int y)
         {
-            CoordenadaX[0] = x;
-            CoordenadaY[0] = y;
+            coordenadas.cargarCoordenadas(0, x, y);
+        }
+
+        public int devolverX(int indice)
+        {
+            return coordenadas.devolverX(indice);
+        }
+
+        public int devolverY(int indice)
+        {
+            return coordenadas.devolverY(indice);
         }
     }
 }

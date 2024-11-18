@@ -37,7 +37,6 @@ namespace SocketServer
             {
                 conexion.PuertoEscucha = puerto;
                 conexion.EscucharPuerto();
-                
             }
             else
             {
@@ -48,7 +47,6 @@ namespace SocketServer
         private void SeRecibieronDatosHandler(string pDatos)
         {
             ActualizarTextBox(pDatos);
-            
         }
 
         delegate void ActualizarTextBoxDelegate(string pTexto);

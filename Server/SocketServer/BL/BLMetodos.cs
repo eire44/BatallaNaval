@@ -12,9 +12,6 @@ namespace BL
     {
         Persistencia persistencia = new Persistencia();
 
-        public delegate void retornarInfoAUI(string s);
-        public event retornarInfoAUI RetornarAUI;
-
         public void pasarAInsertar(List<Datos> datos, int jugador)
         {
             foreach (Datos dato in datos)
@@ -23,7 +20,6 @@ namespace BL
                 if (dato.idBarco == 0)
                 {
                     barco = new Portaviones(dato.horizontal, dato.x, dato.y);
-
                 }
                 else if (dato.idBarco == 1)
                 {

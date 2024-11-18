@@ -15,8 +15,9 @@ namespace BE
             Horizontal = direccion;
             Vidas = 3;
 
-            CoordenadaX = new int[Vidas];
-            CoordenadaY = new int[Vidas];
+            coordenadas = new Coordenadas(Vidas);
+            //CoordenadaX = new int[Vidas];
+            //CoordenadaY = new int[Vidas];
             CalcularCoordenadas(coordenadaX, coordenadaY);
         }
 
@@ -26,13 +27,16 @@ namespace BE
             {
                 if (Horizontal)
                 {
-                    CoordenadaX[i] = x + i;
-                    CoordenadaY[i] = y;
+                    coordenadas.cargarCoordenadas(i, x + i, y);
+
+                    //CoordenadaX[i] = x + i;
+                    //CoordenadaY[i] = y;
                 }
                 else
                 {
-                    CoordenadaX[i] = x;
-                    CoordenadaY[i] = y + i;
+                    coordenadas.cargarCoordenadas(i, x, y + i);
+                    //CoordenadaX[i] = x;
+                    //CoordenadaY[i] = y + i;
                 }
             }
         }
